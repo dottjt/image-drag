@@ -2,6 +2,8 @@ import gql from 'graphql-tag';
 
 const GET_CSV = gql`{
   images @client {
+    url
+    type
     imageHeight
     imageWidth
     annotations {
@@ -11,6 +13,7 @@ const GET_CSV = gql`{
       x2y1
       x2y2
     }
+    annotationCategories
   }
 }`;
 

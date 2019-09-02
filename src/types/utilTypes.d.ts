@@ -1,9 +1,11 @@
 declare namespace Util {
   export type Image = {
-    url: String
+    url: string;
+    type: string;
     imageHeight: number;
     imageWidth: number;
     annotations: [Annotation]
+    annotationCategories: [string]
   }
 
   export type Annotation = {

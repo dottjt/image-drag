@@ -1,11 +1,11 @@
 export const index = `
   type Image = {
-    type: String
     url: String
-    category: String
+    type: String
     imageHeight: Int
     imageWidth: Int
     annotations: [Annotation]
+    annotationCategories: [String]
   }
   type Annotation = {
     name: String
