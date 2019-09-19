@@ -1,7 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
+import Select from 'react-select';
+
 import { SEARCH_POKEMON } from './graphql/mutations';
+import { Util } from 'konva/types/Util';
+
 
 const SelectAnnotation:FC<PropTypes.ISelectAnnotationProps> = ({ 
   annotations,
@@ -9,16 +13,21 @@ const SelectAnnotation:FC<PropTypes.ISelectAnnotationProps> = ({
   setSelectedAnnotation,
  }: PropTypes.ISelectAnnotationProps) => {
 
+  const annotationOptions = annotations.map((annotation: Util.Annotation) => ({
+    value: annotation.pokemon.name,
+    label: annotation.name,
+  }));
+
   return (
     <div className='select__annotation'>
-      <input type="text" value=''/>
-      <div>
-        {annotations.map((annotation) => (
-          <div>
-            <h4>{annotation.pokemon.name}</h4>
-          </div>
-        ))}
-      </div>
+      <Select
+        value={selectedAnnotation}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setSelectedAnnotation(event.target.value);
+        }}
+        options={annotationOptions}
+      />
+
     </div>
   )
 }
