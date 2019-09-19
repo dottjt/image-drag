@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import ImageAnnotator from '../components/ImageAnnotator';
+import ImageAnnotator from '../components/ImageAnnotator/ImageAnnotator';
 
 const PayslipList:FC<PropTypes.IHomeProps> = ({ images }) => (
   <div className='layout'>
