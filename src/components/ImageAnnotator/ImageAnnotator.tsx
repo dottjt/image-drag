@@ -9,6 +9,9 @@ import AnnotationImage from './AnnotationImage/AnnotationImage';
 import './App.css';
 
 class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, PropTypes.IImageAnnotatorState> {
+
+  // NOTE: I will probably need to pass in the image into here.
+
   state: PropTypes.IImageAnnotatorState = {
     rectangles: [],
     rectCount: 0,
@@ -23,18 +26,22 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
     this.img.moveToBottom();
   }
 
-  handleStageMouseDown = (event: Konva.KonvaEventObject<MouseEvent>) => {
+  handleStageMouseDown = (evt: Konva.KonvaEventObject<TouchEvent>) => {
     const { rectangles } = this.state;
     // clicked on stage - clear selection or ready to generate new rectangle
-    if (event.target.className === 'Image') {
-      const stage = event.target.getStage();
-      const mousePos = stage.getPointerPosition();
-      this.setState({
-        mouseDown: true,
-        newRectX: mousePos.x,
-        newRectY: mousePos.y,
-        selectedShapeName: '',
-      });
+    if (evt.target.className === 'Image') {
+      const stage = evt.target.getStage();
+      if (stage) {
+        const mousePos = stage.getPointerPosition();
+        if (mousePos) {
+          this.setState({
+            mouseDown: true,
+            newRectX: mousePos.x,
+            newRectY: mousePos.y,
+            selectedShapeName: '',
+          });  
+        }
+      }
       return;
     }
     // clicked on transformer - do nothing
@@ -74,23 +81,27 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
       rectangles, rectCount, newRectX, newRectY,
     } = this.state;
     const stage = event.target.getStage();
-    const mousePos = stage.getPointerPosition();
-    if (!rectangles[rectCount]) {
-      rectangles.push({
-        pokemon: undefined,
-        x: newRectX,
-        y: newRectY,
-        width: mousePos.x - newRectX,
-        height: mousePos - newRectY,
-        name: `rect${rectCount + 1}`,
-        stroke: '#00A3AA',
-        key: uuidv4(),
-      });
-      return this.setState({ rectangles, mouseDraw: true });
+    if (stage) {
+      const mousePos = stage.getPointerPosition();
+      if (mousePos) {
+        if (!rectangles[rectCount]) {
+          rectangles.push({
+            pokemon: undefined,
+            x: newRectX,
+            y: newRectY,
+            width: mousePos.x - newRectX,
+            height: mousePos.y - newRectY, // this was just mousePos not mousePos.y, so I will have to look into this.
+            name: `rect${rectCount + 1}`,
+            stroke: '#00A3AA',
+            key: uuidv4(),
+          });
+          return this.setState({ rectangles, mouseDraw: true });
+        }
+        rectangles[rectCount].width = mousePos.x - newRectX;
+        rectangles[rectCount].height = mousePos.y - newRectY;
+        return this.setState({ rectangles });
+      }
     }
-    rectangles[rectCount].width = mousePos.x - newRectX;
-    rectangles[rectCount].height = mousePos.y - newRectY;
-    return this.setState({ rectangles });
   };
 
   handleStageMouseUp = () => {

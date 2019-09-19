@@ -27,6 +27,16 @@ declare namespace Util {
 
   export type Pokemon = {
     name: string;
-    sprite: string;
+    sprites: PokemonSprites;
+    types: PokemonType;
   }
+
+  export type PokemonSprites = {
+    front_default: string;
+  }
+  export type PokemonType = {
+    name: '';
+  }
+
+
 }
