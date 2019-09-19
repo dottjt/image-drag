@@ -1,23 +1,22 @@
 import React from 'react';
+import Konva from 'konva';
 import { Rect } from 'react-konva';
 
-class Rectangle extends React.Component {
-  // compare batchDraw() and draw();
+class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
+  rect: any;
+
   componentDidUpdate() {
     // this.rect.getLayer().draw();
     this.rect.getLayer().batchDraw();
   }
 
-  handleChange = (event) => {
-    const {
-      props: { onTransform },
-    } = this;
-    const shape = event.target;
+  handleChange = (evt: Konva.KonvaEventObject<DragEvent>) => {
+    const shape = evt.target;
     // take a look into width and height properties
     // by default Transformer will change scaleX and scaleY
     // while transforming
     // so we need to adjust that properties to width and height
-    onTransform({
+    this.props.onTransform({
       x: shape.x(),
       y: shape.y(),
       width: shape.width() * shape.scaleX(),
@@ -27,7 +26,7 @@ class Rectangle extends React.Component {
   };
 
   // if use rect.draw(), the new rectangle will cover its transformer
-  handleMouseEnter = (event) => {
+  handleMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>) => {
     const shape = event.target;
     shape.stroke('#3DF6FF');
     shape.getStage().container().style.cursor = 'move';
@@ -35,7 +34,7 @@ class Rectangle extends React.Component {
     this.rect.getLayer().draw();
   };
 
-  handleMouseLeave = (event) => {
+  handleMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
     const shape = event.target;
     shape.stroke('#00A3AA');
     shape.getStage().container().style.cursor = 'crosshair';
@@ -44,14 +43,8 @@ class Rectangle extends React.Component {
   };
 
   render() {
-    const {
-      props: {
-        x, y, width, height, name, stroke,
-      },
-      handleChange,
-      handleMouseEnter,
-      handleMouseLeave,
-    } = this;
+    const { x, y, width, height, name, stroke, } = this.props;
+    const { handleChange, handleMouseEnter, handleMouseLeave } = this;
     return (
       <Rect
         x={x}

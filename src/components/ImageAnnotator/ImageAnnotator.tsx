@@ -9,12 +9,10 @@ import AnnotationImage from './AnnotationImage/AnnotationImage';
 import './App.css';
 
 class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, PropTypes.IImageAnnotatorState> {
-
+  img: any;
   // NOTE: I will probably need to pass in the image into here.
 
   state: PropTypes.IImageAnnotatorState = {
-    rectangles: [],
-    rectCount: 0,
     selectedShapeName: '',
     mouseDown: false,
     mouseDraw: false,
@@ -27,7 +25,8 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
   }
 
   handleStageMouseDown = (evt: Konva.KonvaEventObject<TouchEvent>) => {
-    const { rectangles } = this.state;
+    const { annotations, setAnnotations } = this.props;
+
     // clicked on stage - clear selection or ready to generate new rectangle
     if (evt.target.className === 'Image') {
       const stage = evt.target.getStage();
@@ -39,94 +38,88 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
             newRectX: mousePos.x,
             newRectY: mousePos.y,
             selectedShapeName: '',
-          });  
+          });
         }
       }
       return;
     }
+
     // clicked on transformer - do nothing
-    const clickedOnTransformer = event.target.getParent().className === 'Transformer';
+    const clickedOnTransformer = evt.target.getParent().className === 'Transformer';
     if (clickedOnTransformer) {
       return;
     }
 
     // find clicked rect by its name
-    const name = event.target.name();
-    const rect = rectangles.find(r => r.name === name);
+    const name = evt.target.name();
+    const rect = annotations.find(r => r.name === name);
     if (rect) {
-      this.setState({
-        selectedShapeName: name,
-        rectangles,
-      });
+      this.setState({ selectedShapeName: name });
+      setAnnotations([annotations.concat(rect)]);
+
     } else {
-      this.setState({
-        selectedShapeName: '',
-      });
+      this.setState({ selectedShapeName: '' });
     }
   };
 
   handleRectChange = (index: number, newProps: any) => {
-    const { rectangles } = this.state;
+    const { annotations, setAnnotations } = this.props;
 
-    rectangles[index] = {
-      ...rectangles[index],
+    annotations[index] = {
+      ...annotations[index],
       ...newProps,
     };
 
-    this.setState({ rectangles });
+    setAnnotations(annotations);
   };
 
   handleNewRectChange = (event: Konva.KonvaEventObject<MouseEvent>) => {
-    const {
-      rectangles, rectCount, newRectX, newRectY,
-    } = this.state;
+    const { annotations, setAnnotations, annotationCount } = this.props;
+    const { newRectX, newRectY } = this.state;
     const stage = event.target.getStage();
     if (stage) {
       const mousePos = stage.getPointerPosition();
       if (mousePos) {
-        if (!rectangles[rectCount]) {
-          rectangles.push({
+        if (!annotations[annotationCount]) {
+          annotations.push({
             pokemon: undefined,
             x: newRectX,
             y: newRectY,
             width: mousePos.x - newRectX,
             height: mousePos.y - newRectY, // this was just mousePos not mousePos.y, so I will have to look into this.
-            name: `rect${rectCount + 1}`,
+            name: `rect${annotationCount + 1}`,
             stroke: '#00A3AA',
             key: uuidv4(),
           });
-          return this.setState({ rectangles, mouseDraw: true });
+          setAnnotations(annotations);
+          return this.setState({ mouseDraw: true });
         }
-        rectangles[rectCount].width = mousePos.x - newRectX;
-        rectangles[rectCount].height = mousePos.y - newRectY;
-        return this.setState({ rectangles });
+        annotations[annotationCount].width = mousePos.x - newRectX;
+        annotations[annotationCount].height = mousePos.y - newRectY;
+        return setAnnotations(annotations);
       }
     }
   };
 
   handleStageMouseUp = () => {
-    const { rectCount, mouseDraw } = this.state;
+    const { annotationCount, setAnnotationCount } = this.props;
+    const { mouseDraw } = this.state;
     if (mouseDraw) {
-      this.setState({ rectCount: rectCount + 1, mouseDraw: false });
+      setAnnotationCount(annotationCount + 1);
+      this.setState({ mouseDraw: false });
     }
     this.setState({ mouseDown: false });
   };
 
   render() {
-    const {
-      state: { rectangles, selectedShapeName, mouseDown },
-      handleStageMouseDown,
-      handleNewRectChange,
-      handleRectChange,
-      handleStageMouseUp,
-    } = this;
+    const { annotations } = this.props;
+    const { selectedShapeName, mouseDown } = this.state;
+    const { handleStageMouseDown, handleNewRectChange, handleRectChange, handleStageMouseUp } = this;
 
     return (
       <div id='app'>
         <Stage
-          ref={(node) => {
-            this.stage = node;
-          }}
+          ref={(node) => { this.stage = node; }}
           container='app'
           width={994}
           height={640}
@@ -138,12 +131,12 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
           onTouchEnd={mouseDown && handleStageMouseUp}
         >
           <Layer>
-            {rectangles.map((rect, i) => (
+            {annotations.map((rect, i) => (
               <Rectangle
                 sclassName="rect"
                 key={rect.key}
                 {...rect}
-                onTransform={(newProps) => {
+                onTransform={(newProps: any) => {
                   handleRectChange(i, newProps);
                 }}
               />

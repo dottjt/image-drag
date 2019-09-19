@@ -1,7 +1,9 @@
 import React from 'react';
 import { Transformer } from 'react-konva';
 
-class RectTransformer extends React.Component {
+class RectTransformer extends React.Component<IRectTransformerProps, {}> {
+  transformer: any;
+
   componentDidMount() {
     this.checkNode();
   }
