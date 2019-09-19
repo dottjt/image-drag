@@ -9,6 +9,7 @@ import { index } from './types';
 
 const defaults = {
   images: [],
+  searchedPokemon: [],
 };
 
 const preloadedState = (window as any).__APOLLO_STATE__;
@@ -22,7 +23,12 @@ const stateLink = withClientState({
   defaults,
   resolvers: {
     Query: {},
-    Mutation: {},
+    Mutation: {
+      searchPokemon: (_, { pokemonName }, { cache, getCacheKey }) => {
+
+        cache.writeData({ data: { searchedPokemon: [] } });
+      },
+    },
   },
   typeDefs: [ index ],
 });

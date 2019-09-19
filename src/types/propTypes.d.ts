@@ -12,8 +12,20 @@ declare module PropTypes {
     images: Util.Image[],
   }
 
+  // RIGHT BAR
   export type IRightBarProps = {
     annotations: Util.Annotation,
   }
-}
+  export type ISelectPokemonProps = {
+    pokemonSearchString: string,
+    setPokemonSearchString: any,
 
+    selectedPokemon?: Util.Pokemon,
+    setSelectedPokemon: any,
+  }
+  export type ISelectAnnotationProps = {
+    annotations: Util.Annotation[],
+    selectedAnnotation?: Util.Annotation,
+    setSelectedAnnotation: any,
+  }
+}

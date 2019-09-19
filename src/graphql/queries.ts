@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const GET_CSV = gql`{
+export const GET_CSV = gql`{
   images @client {
     url
     type
@@ -16,7 +16,3 @@ const GET_CSV = gql`{
     annotationCategories
   }
 }`;
-
-export default GET_CSV;
-
-
