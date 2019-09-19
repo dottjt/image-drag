@@ -4,12 +4,13 @@ import { Stage, Layer, Image } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
 
-import { SEARCH_POKEMON } from './graphql/mutations';
-
 import { Link } from 'react-router5';
 import { ROUTE_TITLE } from '../../router';
 
-import { submitAnnotation, selectAnnotation } from './RightBarHandler';
+import { SUBMIT_ANNOTATIONS } from './graphql/mutations';
+
+import SelectPokemon from './SelectPokemon';
+import SelectAnnotation from './SelectAnnotation';
 
 const RightBar:FC<PropTypes.IRightBarProps> = ({ annotations }: any) => {
 
@@ -51,31 +52,8 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({ annotations }: any) => {
   );
 }
 
-
-const SelectAnnotation:FC<PropTypes.ISelectAnnotationProps> = ({ 
-  annotations,
-  selectedAnnotation,
-  setSelectedAnnotation,
- }: PropTypes.ISelectAnnotationProps) => {
-
-  return (
-    <div>
-      <input type="text" value=''/>
-      <div>
-        {annotations.map((annotation) => (
-          <div>
-            
-            <h4>{annotation.pokemon.name}</h4>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
+const submitAnnotation = () => {
 
 }
-
-
-
-
 
 export default RightBar;

@@ -1,4 +1,7 @@
+import React, { FC, useEffect, useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
 
+import { SEARCH_POKEMON } from './graphql/mutations';
 
 const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({ 
   pokemonSearchString,
@@ -9,8 +12,11 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
   const [searchPokemon, { data, loading }] = useMutation(SEARCH_POKEMON);
 
   return (
-    <div>
-      <input type="text" value={pokemonSearchString} onChange={}
+    <div className='select__pokemon'>
+      <input type="text" value={pokemonSearchString} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+        setPokemonSearchString(event.target.value);
+        searchPokemon(event.target.value);
+      }}
       />
       <div>
         {data.searchedPokemon.map((pokemon: Util.Pokemon) => (
@@ -21,11 +27,6 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
       </div>
     </div>
   )
-
 }
 
-(event: React.ChangeEvent<HTMLInputElement>) => {
-  setPokemonSearchString(pokemonSearchString);
-  searchPokemon(event.target.value);
-}
-
+export default SelectPokemon;
