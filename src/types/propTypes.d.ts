@@ -11,6 +11,16 @@ declare module PropTypes {
   export type IImageAnnotatorProps = {
     images: Util.Image[],
   }
+  export type IImageAnnotatorState = {
+    rectangles: Util.Annotation[],
+    rectCount: number,
+    selectedShapeName: string,
+    mouseDown: boolean,
+    mouseDraw: boolean,
+    newRectX: number,
+    newRectY: number,
+  }
+
 
   // RIGHT BAR
   export type IRightBarProps = {

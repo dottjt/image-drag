@@ -1,4 +1,5 @@
 import React from 'react';
+import Konva from 'konva';
 import { Stage, Layer } from 'react-konva';
 import uuidv4 from 'uuid/v4';
 
@@ -7,8 +8,8 @@ import RectTransformer from './Rectangle/RectTransformer';
 import AnnotationImage from './AnnotationImage/AnnotationImage';
 import './App.css';
 
-class App extends React.Component {
-  state = {
+class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, PropTypes.IImageAnnotatorState> {
+  state: PropTypes.IImageAnnotatorState = {
     rectangles: [],
     rectCount: 0,
     selectedShapeName: '',
@@ -22,7 +23,7 @@ class App extends React.Component {
     this.img.moveToBottom();
   }
 
-  handleStageMouseDown = (event: Event) => {
+  handleStageMouseDown = (event: Konva.KonvaEventObject<MouseEvent>) => {
     const { rectangles } = this.state;
     // clicked on stage - clear selection or ready to generate new rectangle
     if (event.target.className === 'Image') {
@@ -57,8 +58,9 @@ class App extends React.Component {
     }
   };
 
-  handleRectChange = (index, newProps) => {
+  handleRectChange = (index: number, newProps: any) => {
     const { rectangles } = this.state;
+
     rectangles[index] = {
       ...rectangles[index],
       ...newProps,
@@ -67,7 +69,7 @@ class App extends React.Component {
     this.setState({ rectangles });
   };
 
-  handleNewRectChange = (event) => {
+  handleNewRectChange = (event: Konva.KonvaEventObject<MouseEvent>) => {
     const {
       rectangles, rectCount, newRectX, newRectY,
     } = this.state;
@@ -75,6 +77,7 @@ class App extends React.Component {
     const mousePos = stage.getPointerPosition();
     if (!rectangles[rectCount]) {
       rectangles.push({
+        pokemon: undefined,
         x: newRectX,
         y: newRectY,
         width: mousePos.x - newRectX,
@@ -106,13 +109,14 @@ class App extends React.Component {
       handleRectChange,
       handleStageMouseUp,
     } = this;
+
     return (
-      <div id="app">
+      <div id='app'>
         <Stage
           ref={(node) => {
             this.stage = node;
           }}
-          container="app"
+          container='app'
           width={994}
           height={640}
           onMouseDown={handleStageMouseDown}
@@ -148,4 +152,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default ImageAnnotator;
