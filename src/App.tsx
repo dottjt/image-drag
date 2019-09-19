@@ -4,13 +4,11 @@ import { useQuery } from '@apollo/react-hooks';
 import GET_CSV from './graphql/queries';
 import router, { ROUTE_TITLE } from './router';
 
-import PayslipList from './pages/Home';
-
-// import { } from './util';
+import Home from './pages/Home';
 
 import './scss/index.scss';
 
-const App:FC<PropTypes.IAppProps> = ({ client, route }) => {
+const App:FC<PropTypes.IAppProps> = ({ client, route }: any) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,7 +38,7 @@ const App:FC<PropTypes.IAppProps> = ({ client, route }) => {
   }
 
   switch (route.name) {
-    case ROUTE_TITLE.Home: {
+    case ROUTE_TITLE.HOME: {
       return (
         <Home
           images={data.images}

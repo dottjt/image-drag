@@ -9,10 +9,14 @@ declare namespace Util {
   }
 
   export type Annotation = {
-    name: string;
+    pokemon: Pokemon;
     x1y1: number;
     x1y2: number;
     x2y1: number;
     x2y2: number;
+  }
+
+  export type Pokemon = {
+    name: string;
   }
 }

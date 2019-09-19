@@ -11,5 +11,9 @@ declare module PropTypes {
   export type IImageAnnotatorProps = {
     images: Util.Image[],
   }
+
+  export type IRightBarProps = {
+    annotations: Util.Annotation,
+  }
 }
 
