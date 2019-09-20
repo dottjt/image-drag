@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import ImageAnnotator from '../components/ImageAnnotator/ImageAnnotator';
 import RightBar from '../components/RightBar/RightBar';
 
-const PayslipList:FC<PropTypes.IHomeProps> = ({ images }) => {
+const Annotation:FC<PropTypes.IAnnotationProps> = ({ images }) => {
   const [annotations, setAnnotations] = useState<Util.Annotation[]>([]);
   const [annotationCount, setAnnotationCount] = useState<number>(0);
 
@@ -25,4 +25,4 @@ const PayslipList:FC<PropTypes.IHomeProps> = ({ images }) => {
   )
 };
 
-export default PayslipList;
+export default Annotation;

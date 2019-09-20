@@ -1,11 +1,18 @@
 declare module PropTypes {
+  // APP
   export type IAppProps = {
     client: any,
     route: any,
   }
 
-  export type IHomeProps = {
+  // ANNOTATION
+  export type IAnnotationProps = {
     images: Util.Image[],
+  }
+
+  // GALLERY
+  export type IGalleryProps = {
+
   }
 
   // IMAGE ANNOTATOR
@@ -38,8 +45,6 @@ declare module PropTypes {
     name: string;
     stroke: string;
   }
-
-
 
   // RIGHT BAR
   export type IRightBarProps = {
