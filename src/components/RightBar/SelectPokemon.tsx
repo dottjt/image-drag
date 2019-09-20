@@ -1,15 +1,15 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
-import { SEARCH_POKEMON } from './graphql/mutations';
+import { SEARCH_POKEMON } from '../../graphql/mutations';
 
-const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({ 
+const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
   pokemonSearchString,
   setPokemonSearchString,
   selectedPokemon,
   setSelectedPokemon,
 }: PropTypes.ISelectPokemonProps) => {
-  const [searchPokemon, { data, loading }] = useMutation(SEARCH_POKEMON);
+  const [searchPokemon, { data }] = useMutation(SEARCH_POKEMON);
 
   return (
     <div className='select__pokemon'>
@@ -18,7 +18,7 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
         type='text'
         value={pokemonSearchString} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setPokemonSearchString(event.target.value);
-          searchPokemon(event.target.value);
+          searchPokemon({ variables: { pokemonName: event.target.value } });
         }}
       />
       {data.searchedPokemon.length > 1 && (
