@@ -2,8 +2,8 @@ declare namespace Util {
   export type Image = {
     url: string;
     type: string;
-    imageHeight: number;
-    imageWidth: number;
+    height: number;
+    width: number;
     annotations: [Annotation]
     annotationCategories: [string]
   }

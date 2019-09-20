@@ -27,30 +27,40 @@ class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
 
   // if use rect.draw(), the new rectangle will cover its transformer
   handleMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>) => {
-    const shape = event.target;
-    shape.stroke('#3DF6FF');
-    shape.getStage().container().style.cursor = 'move';
+    // NOTE, may be wrong
+    // const shape = event.target;
+    this.rect.stroke('#3DF6FF');
+    this.rect.getStage().container().style.cursor = 'move';
+
     // this.rect.draw();
     this.rect.getLayer().draw();
   };
 
   handleMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
-    const shape = event.target;
-    shape.stroke('#00A3AA');
-    shape.getStage().container().style.cursor = 'crosshair';
+    // NOTE, may be wrong
+    // const shape = event.target;
+    this.rect.stroke('#00A3AA');
+    this.rect.getStage().container().style.cursor = 'crosshair';
     // this.rect.draw();
     this.rect.getLayer().draw();
   };
 
   render() {
-    const { x, y, width, height, name, stroke, } = this.props;
-    const { handleChange, handleMouseEnter, handleMouseLeave } = this;
+    const { 
+      x1y1,
+      x1y2,
+      x2y1,
+      x2y2,
+      name,
+      stroke,
+    } = this.props;
     return (
       <Rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
+        x={x1y1}
+        y={x2y1}
+        width={x1y1- x1y2}
+        height={x2y1- x2y2}
+
         // force no scaling
         // otherwise Transformer will change it
         scaleX={1}
@@ -58,12 +68,14 @@ class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
         stroke={stroke}
         strokeWidth={5}
         name={name}
+        
         // save state on dragend or transformend
-        onDragEnd={handleChange}
-        onTransformEnd={handleChange}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onDragEnd={this.handleChange}
+        onTransformEnd={this.handleChange}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
         draggable
+        
         ref={(node) => {
           this.rect = node;
         }}

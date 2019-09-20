@@ -7,7 +7,7 @@ import useImage from 'use-image';
 import { Link } from 'react-router5';
 import { ROUTE_TITLE } from '../../router';
 
-import { SUBMIT_ANNOTATIONS } from './graphql/mutations';
+import { SUBMIT_ANNOTATIONS } from '../../graphql/mutations';
 
 import SelectPokemon from './SelectPokemon';
 import SelectAnnotation from './SelectAnnotation';

@@ -2,8 +2,8 @@ export const index = `
   type Image = {
     url: String
     type: String
-    imageHeight: Int
-    imageWidth: Int
+    height: Int
+    width: Int
     annotations: [Annotation]
     annotationCategories: [String]
   }

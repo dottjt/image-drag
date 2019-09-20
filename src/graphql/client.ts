@@ -31,7 +31,11 @@ const stateLink = withClientState({
 
 const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([stateLink, new HttpLink({ uri: 'http://localhost:2002/graphql' })]),
+  link: ApolloLink.from([
+    stateLink,
+    new HttpLink({ uri: window.location.hostname === 'localhost' ? 'http://localhost:5001/graphql' : 'https://api.pokeml.com/graphql' }) // http://localhost:2001/graphql
+    // new HttpLink({ uri: 'http://localhost:5001/graphql' }) // 
+  ]),
 });
 
 (window as any).snapSaveState = () => ({
