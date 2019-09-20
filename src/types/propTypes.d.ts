@@ -6,18 +6,15 @@ declare module PropTypes {
   }
 
   // ANNOTATION
-  export type IAnnotationProps = {
-    images: Util.Image[],
-  }
+  export type IAnnotationProps = {}
 
   // GALLERY
-  export type IGalleryProps = {
-
-  }
+  export type IGalleryProps = {}
 
   // IMAGE ANNOTATOR
   export type IImageAnnotatorProps = {
     images: Util.Image[],
+    currentImage: Util.Image,
 
     annotations: Util.Annotation[],
     setAnnotations: any,
@@ -32,7 +29,9 @@ declare module PropTypes {
     newRectX: number,
     newRectY: number,
   }
-  export type IAnnotationImageProps = {}
+  export type IAnnotationImageProps = {
+    currentImage: Util.Image,
+  }
   export type IRectTransformerProps = {
     selectedShapeName: string,
   }

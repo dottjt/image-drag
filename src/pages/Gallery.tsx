@@ -3,11 +3,16 @@ import React, { FC, useState } from 'react';
 import ImageAnnotator from '../components/ImageAnnotator/ImageAnnotator';
 import RightBar from '../components/RightBar/RightBar';
 
-const Gallery:FC<PropTypes.IGalleryProps> = ({ images }) => {
+import { useQuery } from '@apollo/react-hooks';
+
+import { GET_GALLERY } from '../graphql/queries';
+
+const Gallery:FC<PropTypes.IGalleryProps> = () => {
+  const { data, loading } = useQuery(GET_GALLERY);
 
   return (
     <div className='layout'>
-        
+      
     </div>
   )
 };

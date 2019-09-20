@@ -1,16 +1,25 @@
 import React, { FC, useState } from 'react';
 
 import ImageAnnotator from '../components/ImageAnnotator/ImageAnnotator';
+import Loading from '../components/Loading';
 import RightBar from '../components/RightBar/RightBar';
 
-const Annotation:FC<PropTypes.IAnnotationProps> = ({ images }) => {
+import { useQuery } from '@apollo/react-hooks';
+
+import { GET_ANNOTATION } from '../graphql/queries';
+
+const Annotation:FC<PropTypes.IAnnotationProps> = () => {
+  const { data, loading } = useQuery(GET_ANNOTATION);
+
+  if (loading) return <Loading loading={loading}/>
+
   const [annotations, setAnnotations] = useState<Util.Annotation[]>([]);
   const [annotationCount, setAnnotationCount] = useState<number>(0);
 
   return (
     <div className='layout'>
       <ImageAnnotator
-        images={images}
+        images={data.images}
 
         annotations={annotations}
         setAnnotations={setAnnotations}

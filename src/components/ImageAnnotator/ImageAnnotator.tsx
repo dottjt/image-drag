@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Konva from 'konva';
-import { Stage, Layer } from 'react-konva';
+import { Stage, Layer, Image } from 'react-konva';
 import uuidv4 from 'uuid/v4';
+import useImage from 'use-image';
 
 import Rectangle from './Rectangle/Rectangle';
 import RectTransformer from './Rectangle/RectTransformer';
-import AnnotationImage from './AnnotationImage/AnnotationImage';
 import './App.css';
 
 class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, PropTypes.IImageAnnotatorState> {
-  img: any;
   // NOTE: I will probably need to pass in the image into here.
+  img: any;
 
   state: PropTypes.IImageAnnotatorState = {
     selectedShapeName: '',
@@ -46,9 +46,7 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
 
     // clicked on transformer - do nothing
     const clickedOnTransformer = evt.target.getParent().className === 'Transformer';
-    if (clickedOnTransformer) {
-      return;
-    }
+    if (clickedOnTransformer) return;
 
     // find clicked rect by its name
     const name = evt.target.name();
@@ -83,10 +81,14 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
         if (!annotations[annotationCount]) {
           annotations.push({
             pokemon: undefined,
-            x: newRectX,
-            y: newRectY,
-            width: mousePos.x - newRectX,
-            height: mousePos.y - newRectY, // this was just mousePos not mousePos.y, so I will have to look into this.
+            x1y1: mousePos.x,
+            x1y2: mousePos.y,
+            x2y1: newRectX,
+            x2y2: newRectY,
+            // x: newRectX,
+            // y: newRectY,
+            // width: mousePos.x - newRectX,
+            // height: mousePos.y - newRectY, // this was just mousePos not mousePos.y, so I will have to look into this.
             name: `rect${annotationCount + 1}`,
             stroke: '#00A3AA',
             key: uuidv4(),
@@ -94,8 +96,8 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
           setAnnotations(annotations);
           return this.setState({ mouseDraw: true });
         }
-        annotations[annotationCount].width = mousePos.x - newRectX;
-        annotations[annotationCount].height = mousePos.y - newRectY;
+        // annotations[annotationCount].width = mousePos.x - newRectX;
+        // annotations[annotationCount].height = mousePos.y - newRectY;
         return setAnnotations(annotations);
       }
     }
@@ -112,32 +114,31 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
   };
 
   render() {
-    const { annotations } = this.props;
+    const { annotations, currentImage } = this.props;
     const { selectedShapeName, mouseDown } = this.state;
-    const { handleStageMouseDown, handleNewRectChange, handleRectChange, handleStageMouseUp } = this;
 
     return (
       <div id='app'>
         <Stage
           ref={(node) => { this.stage = node; }}
           container='app'
-          width={994}
-          height={640}
-          onMouseDown={handleStageMouseDown}
-          onTouchStart={handleStageMouseDown}
-          onMouseMove={mouseDown && handleNewRectChange}
-          onTouchMove={mouseDown && handleNewRectChange}
-          onMouseUp={mouseDown && handleStageMouseUp}
-          onTouchEnd={mouseDown && handleStageMouseUp}
+          width={currentImage.width}
+          height={currentImage.height}
+          onMouseDown={this.handleStageMouseDown}
+          onTouchStart={this.handleStageMouseDown}
+          onMouseMove={mouseDown && this.handleNewRectChange}
+          onTouchMove={mouseDown && this.handleNewRectChange}
+          onMouseUp={mouseDown && this.handleStageMouseUp}
+          onTouchEnd={mouseDown && this.handleStageMouseUp}
         >
           <Layer>
             {annotations.map((rect, i) => (
               <Rectangle
-                sclassName="rect"
+                className='rect'
                 key={rect.key}
                 {...rect}
                 onTransform={(newProps: any) => {
-                  handleRectChange(i, newProps);
+                  this.handleRectChange(i, newProps);
                 }}
               />
             ))}
@@ -148,12 +149,27 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
               this.img = node;
             }}
           >
-            <AnnotationImage />
+            <AnnotationImage currentImage={this.props.currentImage} />
           </Layer>
         </Stage>
       </div>
     );
   }
+}
+
+const AnnotationImage:FC<PropTypes.IAnnotationImageProps> = ({
+  currentImage,
+}: PropTypes.IAnnotationImageProps) => {
+
+  const [image] = useImage(currentImage.url);
+
+  return (
+    <div className='image__annotator'>
+      <Image
+        image={image}
+      />
+    </div>
+  );
 }
 
 export default ImageAnnotator;

@@ -9,6 +9,7 @@ import { index } from './types';
 
 const defaults = {
   images: [],
+  currentImage: {},
   searchedPokemon: [],
 };
 
@@ -23,19 +24,14 @@ const stateLink = withClientState({
   defaults,
   resolvers: {
     Query: {},
-    Mutation: {
-      searchPokemon: (_, { pokemonName }, { cache, getCacheKey }) => {
-
-        cache.writeData({ data: { searchedPokemon: [] } });
-      },
-    },
+    Mutation: {},
   },
   typeDefs: [ index ],
 });
 
 const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([stateLink, new HttpLink({ uri: 'http://localhost:4000/graphql' })]),
+  link: ApolloLink.from([stateLink, new HttpLink({ uri: 'http://localhost:2002/graphql' })]),
 });
 
 (window as any).snapSaveState = () => ({
