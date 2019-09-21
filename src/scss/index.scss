@@ -1,9 +1,17 @@
+@import './image_annotator.scss';
+@import './right_bar.scss';
+
 * {
   font-family: Arial, sans-serif;
 }
 
 .layout {
   padding: 0.5rem;
+}
+
+.layout__annotation {
+  display: flex;
+  justify-content: space-between;
 }
 
 @media screen and (min-width: 768px) {
@@ -20,6 +28,8 @@
     }
   }
 }
+
+
 
 
 

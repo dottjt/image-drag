@@ -6,7 +6,7 @@ import { ValueType } from "react-select/src/types";
 
 type OptionType = { label: string; value: number };
 
-// import { SEARCH_POKEMON } from '../../graphql/queries';
+// import { GET_POKEMON } from '../../graphql/queries';
 // import { Util } from 'konva/types/Util';
 
 const SelectAnnotation:FC<PropTypes.ISelectAnnotationProps> = ({ 

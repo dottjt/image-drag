@@ -1,5 +1,6 @@
 export const index = `
-  type Image = {
+  type Image {
+    id: ID
     url: String
     type: String
     height: Int
@@ -7,11 +8,44 @@ export const index = `
     annotations: [Annotation]
     annotationCategories: [String]
   }
-  type Annotation = {
+
+  input AnnotationInput {
+    pokemon_id: String 
+
     name: String
+    stroke: String
+    key: String
+    
     x1y1: Int
     x1y2: Int
     x2y1: Int
     x2y2: Int
+  }
+
+  type Annotation {
+    id: ID
+    pokemon: Pokemon
+
+    name: String
+    stroke: String
+    key: String
+    
+    x1y1: Int
+    x1y2: Int
+    x2y1: Int
+    x2y2: Int
+  }
+
+  input PokemonInput {
+    pokemon_id: String
+    name: String
+    sprite: String
+  }
+
+  type Pokemon {
+    id: ID
+    pokemon_id: String
+    name: String
+    sprite: String
   }
 `;

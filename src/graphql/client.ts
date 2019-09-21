@@ -7,11 +7,7 @@ import { withClientState } from 'apollo-link-state';
 
 import { index } from './types';
 
-const defaults = {
-  images: [],
-  currentImage: {},
-  searchedPokemon: [],
-};
+const defaults = {};
 
 const preloadedState = (window as any).__APOLLO_STATE__;
 
@@ -34,7 +30,6 @@ const client = new ApolloClient({
   link: ApolloLink.from([
     stateLink,
     new HttpLink({ uri: window.location.hostname === 'localhost' ? 'http://localhost:5001/graphql' : 'https://api.pokeml.com/graphql' }) // http://localhost:2001/graphql
-    // new HttpLink({ uri: 'http://localhost:5001/graphql' }) // 
   ]),
 });
 

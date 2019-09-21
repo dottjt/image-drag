@@ -20,9 +20,9 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({ annotations }: any) => {
   const [pokemonSearchString, setPokemonSearchString] = useState('');
 
   return (
-    <div className='rightbar__image'>
-      <div className='rightbar__image__section'>
-        <h3 className='rightbar__image__section__title'>
+    <div className='right_bar'>
+      <div className='right_bar__section'>
+        <h3 className='right_bar__section__title'>
           Select Annotation
         </h3>
         <SelectAnnotation
@@ -32,8 +32,8 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({ annotations }: any) => {
           setSelectedAnnotation={setSelectedAnnotation}
         />
       </div>
-      <div className='rightbar__image__section'>
-        <h3 className='rightbar__image__section__title'>
+      <div className='right_bar__section'>
+        <h3 className='right_bar__section__title'>
           Select Pokemon
         </h3>
         <SelectPokemon
@@ -45,8 +45,8 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({ annotations }: any) => {
         />
       </div>
 
-      <div className='rightbar__image__section'>
-        <button className='rightbar__image__section--submit' onClick={submitAnnotation}>Submit</button>
+      <div className='right_bar__section'>
+        <button className='right_bar__section--submit' onClick={submitAnnotation}>Submit</button>
       </div>
     </div>
   );

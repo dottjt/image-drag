@@ -56,6 +56,11 @@ declare module PropTypes {
     selectedPokemon?: Util.Pokemon,
     setSelectedPokemon: any,
   }
+  export type ISelectPokemonResultProps = {
+    pokemon?: Util.Pokemon,
+    setSelectedPokemon: any,
+    isSelectedPokemon?: boolean;
+  }
   export type ISelectAnnotationProps = {
     annotations: Util.Annotation[],
     selectedAnnotation?: Util.Annotation,

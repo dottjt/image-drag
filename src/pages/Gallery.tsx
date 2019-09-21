@@ -5,10 +5,10 @@ import RightBar from '../components/RightBar/RightBar';
 
 import { useQuery } from '@apollo/react-hooks';
 
-import { GET_GALLERY } from '../graphql/queries';
+import { GET_IMAGES } from '../graphql/queries';
 
 const Gallery:FC<PropTypes.IGalleryProps> = () => {
-  const { data, loading } = useQuery(GET_GALLERY);
+  const { data, loading } = useQuery(GET_IMAGES);
 
   return (
     <div className='layout'>

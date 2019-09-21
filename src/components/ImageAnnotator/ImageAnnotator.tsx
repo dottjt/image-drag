@@ -123,39 +123,37 @@ class ImageAnnotator extends React.Component<PropTypes.IImageAnnotatorProps, Pro
     const { selectedShapeName, mouseDown } = this.state;
 
     return (
-      <div id='app'>
-        <Stage
-          ref={(node) => { this.stage = node; }}
-          container='app'
-          width={currentImage.width}
-          height={currentImage.height}
-          onMouseDown={this.handleStageMouseDown}
-          onTouchStart={this.handleStageMouseDown}
-          onMouseMove={this.handleNewRectChange}
-          onTouchMove={this.handleNewRectChange}
-          onMouseUp={this.handleStageMouseUp}
-          onTouchEnd={this.handleStageMouseUp}
-        >
-          <Layer>
-            {annotations.map((annotation: Util.Annotation, i: number) => (
-              <Rectangle
-                key={annotation.key}
-                {...annotation}
-                onTransform={(newProps: any) => {
-                  this.handleRectChange(i, newProps);
-                }}
-              />
-            ))}
-            <RectTransformer selectedShapeName={selectedShapeName} />
-          </Layer>
-          <Layer
-            ref={(node) => {
-              this.img = node;
-            }}
+      <div className='image__annotator'>
+        <div id='app'>
+          <Stage
+            ref={(node) => { this.stage = node; }}
+            container='app'
+            width={currentImage.width}
+            height={currentImage.height}
+            onMouseDown={this.handleStageMouseDown}
+            onTouchStart={this.handleStageMouseDown}
+            onMouseMove={this.handleNewRectChange}
+            onTouchMove={this.handleNewRectChange}
+            onMouseUp={this.handleStageMouseUp}
+            onTouchEnd={this.handleStageMouseUp}
           >
-            <AnnotationImage currentImage={this.props.currentImage} />
-          </Layer>
-        </Stage>
+            <Layer>
+              {annotations.map((annotation: Util.Annotation, i: number) => (
+                <Rectangle
+                  key={annotation.key}
+                  {...annotation}
+                  onTransform={(newProps: any) => {
+                    this.handleRectChange(i, newProps);
+                  }}
+                />
+              ))}
+              <RectTransformer selectedShapeName={selectedShapeName} />
+            </Layer>
+            <Layer ref={(node) => { this.img = node; }}>
+              <AnnotationImage currentImage={this.props.currentImage} />
+            </Layer>
+          </Stage>
+        </div>
       </div>
     );
   }
@@ -168,11 +166,9 @@ const AnnotationImage:FC<PropTypes.IAnnotationImageProps> = ({
   const [image] = useImage(currentImage.url);
 
   return (
-    <div className='image__annotator'>
-      <Image
-        image={image}
-      />
-    </div>
+    <Image
+      image={image}
+    />
   );
 }
 

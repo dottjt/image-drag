@@ -1,37 +1,23 @@
 import gql from 'graphql-tag';
 
-export const GET_ANNOTATION = gql`{
-  # query getAnnotation {
-    currentImage {
-      url
-      name 
-    }   
-    images {
-      url
-      name
-    }
-  # }
-}`;
-
-export const GET_GALLERY = gql`{
-  images @client {
+export const GET_IMAGES = gql`{
+  getImages {
+    id    
     url
     type
     height
     width
-    annotations {
-      name
-      x1y1
-      x1y2
-      x2y1
-      x2y2
-    }
-    annotationCategories
+    # annotations
+    # annotationCategories  
   }
 }`;
 
-export const SEARCH_POKEMON = gql`
-  query SearchPokemon($pokemonName: String) {
-    searchPokemon(pokemonName: $pokemonName)
+export const GET_POKEMON = gql`
+  query GetPokemon($pokemonName: String) {
+    getPokemon(pokemonName: $pokemonName) {
+      id
+      name
+      sprite
+    }
   }
 `;
