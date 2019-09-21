@@ -2,6 +2,7 @@ import React from 'react';
 import Konva from 'konva';
 import { Rect } from 'react-konva';
 
+
 class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
   rect: any;
 
@@ -27,8 +28,6 @@ class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
 
   // if use rect.draw(), the new rectangle will cover its transformer
   handleMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>) => {
-    // NOTE, may be wrong
-    // const shape = event.target;
     this.rect.stroke('#3DF6FF');
     this.rect.getStage().container().style.cursor = 'move';
 
@@ -37,8 +36,6 @@ class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
   };
 
   handleMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>) => {
-    // NOTE, may be wrong
-    // const shape = event.target;
     this.rect.stroke('#00A3AA');
     this.rect.getStage().container().style.cursor = 'crosshair';
     // this.rect.draw();
@@ -47,19 +44,27 @@ class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
 
   render() {
     const { 
-      x1y1,
-      x1y2,
-      x2y1,
-      x2y2,
+      // x1y1,
+      // x1y2,
+      // x2y1,
+      // x2y2,
+      x,
+      y,
+      width,
+      height,
       name,
       stroke,
     } = this.props;
     return (
       <Rect
-        x={x1y1}
-        y={x2y1}
-        width={x1y1- x1y2}
-        height={x2y1- x2y2}
+        // x={x1y1}
+        // y={x2y1}
+        // width={x1y1- x1y2}
+        // height={x2y1- x2y2}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
 
         // force no scaling
         // otherwise Transformer will change it
@@ -72,13 +77,13 @@ class Rectangle extends React.Component<PropTypes.IRectangleProps, {}> {
         // save state on dragend or transformend
         onDragEnd={this.handleChange}
         onTransformEnd={this.handleChange}
+        
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+
         draggable
         
-        ref={(node) => {
-          this.rect = node;
-        }}
+        ref={(node) => { this.rect = node; }}
       />
     );
   }

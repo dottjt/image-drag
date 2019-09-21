@@ -14,9 +14,6 @@ const Annotation:FC<PropTypes.IAnnotationProps> = () => {
   const [annotations, setAnnotations] = useState<Util.Annotation[]>([]);
   const [annotationCount, setAnnotationCount] = useState<number>(0);
   
-  console.log(loading);
-  console.log(data);
-
   if (loading) return <Loading loading={loading}/>
 
   return (

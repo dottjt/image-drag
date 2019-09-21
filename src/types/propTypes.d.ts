@@ -37,10 +37,16 @@ declare module PropTypes {
   }
   export type IRectangleProps = {
     onTransform: any,
-    x1y1: number;
-    x1y2: number;
-    x2y1: number;
-    x2y2: number;
+
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+
+    // x1y1: number;
+    // x1y2: number;
+    // x2y1: number;
+    // x2y2: number;
     name: string;
     stroke: string;
   }

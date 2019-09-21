@@ -16,10 +16,10 @@ export const index = `
     stroke: String
     key: String
     
-    x1y1: Int
-    x1y2: Int
-    x2y1: Int
-    x2y2: Int
+    x: Int
+    y: Int
+    width: Int
+    height: Int
   }
 
   type Annotation {
@@ -30,10 +30,10 @@ export const index = `
     stroke: String
     key: String
     
-    x1y1: Int
-    x1y2: Int
-    x2y1: Int
-    x2y2: Int
+    x: Int
+    y: Int
+    width: Int
+    height: Int
   }
 
   input PokemonInput {

@@ -34,9 +34,7 @@ class RectTransformer extends React.Component<PropTypes.IRectTransformerProps, {
   render() {
     return (
       <Transformer
-        ref={(node) => {
-          this.transformer = node;
-        }}
+        ref={(node) => { this.transformer = node; }}
         rotateEnabled={false}
       />
     );
