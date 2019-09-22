@@ -4,38 +4,44 @@ import { Rect } from 'react-konva';
 
 
 const Rectangle: FC<PropTypes.IRectangleProps> = ({
-  x,
-  y,
-  width,
-  height,
-  name,
-  stroke,
+  annotation,
+  isSelected,
   onTransform,
+  onSelectAnnotation,
+  tRef,
 }: any) => {
   const rect: any = useRef();
 
-  useEffect(() => {
-    // if (isSelected) {
-      // we need to attach transformer manually
-      // trRef.current.setNode(shapeRef.current);
-      rect.current.getLayer().batchDraw();
-    // }
-  }, [])
+  React.useEffect(() => {
+    console.log(isSelected)
+    if (isSelected) {
+      tRef.current.setNode(rect.current);
+      tRef.current.getLayer().batchDraw();
+    }
+  }, [isSelected]);
+
+  // useEffect(() => {
+  //   if (isSelected) {
+  //     // we need to attach transformer manually
+  //     rect.current.setNode(shapeRef.current);
+  //     rect.current.getLayer().batchDraw();
+  //   }
+  // }, [])
 
   return (
     <Rect
-      x={x}
-      y={y}
-      width={width}
-      height={height}
+      x={annotation.x}
+      y={annotation.y}
+      width={annotation.width}
+      height={annotation.height}
 
       // force no scaling
       // otherwise Transformer will change it
       scaleX={1}
       scaleY={1}
-      stroke={stroke}
+      stroke={annotation.stroke}
       strokeWidth={5}
-      name={name}
+      name={annotation.name}
       
       // save state on dragend or transformend
       onDragEnd={(evt) => handleChange(evt, onTransform)}
@@ -43,6 +49,7 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
       onMouseEnter={(evt) => handleMouseEnter(evt, rect)}
       onMouseLeave={(evt) => handleMouseLeave(evt, rect)}
 
+      onClick={onSelectAnnotation}
       draggable
       
       ref={rect}

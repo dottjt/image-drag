@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 import ImageAnnotator from '../components/ImageAnnotator/ImageAnnotator';
 import Loading from '../components/Loading';
@@ -13,7 +13,9 @@ const Annotation:FC<PropTypes.IAnnotationProps> = () => {
 
   const [annotations, setAnnotations] = useState<Util.Annotation[]>([]);
   const [annotationCount, setAnnotationCount] = useState<number>(0);
-  
+  const [, updateState] = useState(); 
+  const forceUpdate = useCallback(() => updateState({}), []);
+
   if (loading) return <Loading loading={loading}/>
 
   return (
@@ -28,6 +30,8 @@ const Annotation:FC<PropTypes.IAnnotationProps> = () => {
 
           annotationCount={annotationCount}
           setAnnotationCount={setAnnotationCount}
+          
+          forceUpdate={forceUpdate}
         />
         <RightBar
           annotations={annotations}

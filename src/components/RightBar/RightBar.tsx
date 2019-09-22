@@ -20,6 +20,8 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
 
   const [submitAnnotations] = useMutation(SUBMIT_ANNOTATIONS);
 
+  console.log('right bar refersh')
+
   return (
     <div className='right_bar'>
       <div className='right_bar__section'>

@@ -14,23 +14,24 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
 
   annotationCount,
   setAnnotationCount,
+
+  forceUpdate,
 }: PropTypes.IImageAnnotatorProps) => {
   const img: any = useRef();
   const stage: any = useRef();
+  const tRef: any = useRef();
 
   const [selectedShapeName, setSelectedShapeName] = useState<string>('');
   const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [mouseDraw, setMouseDraw] = useState<boolean>(false);
   const [newRectX, setNewRectX] = useState<number>(0);
   const [newRectY, setNewRectY] = useState<number>(0);
-  const [, updateState] = useState(); 
-  const forceUpdate = useCallback(() => updateState({}), []);
 
   useEffect(() => {
     img.current.moveToBottom();
   }); 
 
-  console.log(annotationCount);
+  console.log(selectedShapeName);
 
   return (
     <div className='image__annotator'>
@@ -73,12 +74,18 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
           <Layer>
             {annotations.map((annotation: Util.Annotation, i: number) => (
               <Rectangle
-                {...annotation}
                 key={i}
-                onTransform={(newProps: any) => handleRectChange(i, newProps, annotations, setAnnotations) }
+                annotation={annotation}
+                isSelected={annotation.name === selectedShapeName}
+                onTransform={(newProps: any) => handleRectChange(i, newProps, annotations, setAnnotations)}
+                onSelectAnnotation={() => setSelectedShapeName(annotation.name)}
+                tRef={tRef}
               />
             ))}
-            <RectTransformer selectedShapeName={selectedShapeName} />
+            <RectTransformer 
+              selectedShapeName={selectedShapeName} 
+              tRef={tRef}
+            />
           </Layer>
           <Layer ref={img}>
             <AnnotationImage currentImage={currentImage} />
@@ -98,7 +105,6 @@ const onMouseDown = (
   setNewRectY: React.Dispatch<React.SetStateAction<number>>,
   setSelectedShapeName: React.Dispatch<React.SetStateAction<string>>,
 ) => {
-
   if (evt.target.className === 'Image') {
     const stage = evt.target.getStage();
     if (stage) {

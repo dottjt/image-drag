@@ -1,4 +1,4 @@
-export const index = `
+const typeDefs = `
   type Image {
     id: ID
     url: String
@@ -49,3 +49,5 @@ export const index = `
     sprite: String
   }
 `;
+
+export default index;

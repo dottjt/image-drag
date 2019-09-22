@@ -1,8 +1,17 @@
 import gql from 'graphql-tag';
 
+
+export const GET_CURRENT_USER = gql`{
+  getCurrentUser {
+    id
+    email
+    display_name
+  }
+}`;
+
 export const GET_IMAGES = gql`{
   getImages {
-    id    
+    id
     url
     type
     height

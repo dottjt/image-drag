@@ -5,7 +5,7 @@ import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { withClientState } from 'apollo-link-state';
 
-import { index } from './types';
+import typeDefs from './typeDefs';
 
 const defaults = {};
 
@@ -22,7 +22,7 @@ const stateLink = withClientState({
     Query: {},
     Mutation: {},
   },
-  typeDefs: [ index ],
+  typeDefs: [ typeDefs ],
 });
 
 const client = new ApolloClient({

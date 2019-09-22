@@ -21,6 +21,8 @@ declare module PropTypes {
 
     annotationCount: number,
     setAnnotationCount: any,
+
+    forceUpdate: any,
   }
   export type IImageAnnotatorState = {
     selectedShapeName: string,
@@ -34,21 +36,14 @@ declare module PropTypes {
   }
   export type IRectTransformerProps = {
     selectedShapeName: string,
+    tRef: any,
   }
   export type IRectangleProps = {
+    annotation: Util.Annotation,
+    isSelected: boolean,
     onTransform: any,
-
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-
-    // x1y1: number;
-    // x1y2: number;
-    // x2y1: number;
-    // x2y2: number;
-    name: string;
-    stroke: string;
+    onSelectAnnotation: any,
+    tRef: any,
   }
 
   // RIGHT BAR
