@@ -4,20 +4,21 @@ import { Stage, Layer, Image } from 'react-konva';
 import Konva from 'konva';
 import useImage from 'use-image';
 
-import { Link } from 'react-router5';
-import { ROUTE_TITLE } from '../../router';
-
 import { SUBMIT_ANNOTATIONS } from '../../graphql/mutations';
 
 import SelectPokemon from './SelectPokemon';
 import SelectAnnotation from './SelectAnnotation';
 
-const RightBar:FC<PropTypes.IRightBarProps> = ({ annotations }: any) => {
+const RightBar:FC<PropTypes.IRightBarProps> = ({ 
+  annotations,
+}: PropTypes.IRightBarProps) => {
 
   const [selectedAnnotation, setSelectedAnnotation] = useState(undefined);
   const [selectedPokemon, setSelectedPokemon] = useState(undefined);
 
   const [pokemonSearchString, setPokemonSearchString] = useState('');
+
+  const [submitAnnotations] = useMutation(SUBMIT_ANNOTATIONS);
 
   return (
     <div className='right_bar'>
@@ -48,15 +49,15 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({ annotations }: any) => {
       )}
       {annotations.length > 0 && (
         <div className='right_bar__section'>
-          <button className='right_bar__section--submit' onClick={submitAnnotation}>Submit</button>
+          <button 
+            className='right_bar__section--submit' 
+            onClick={() => submitAnnotations({ variables: { annotations } })}>
+              Submit
+          </button>
         </div>
       )}
     </div>
   );
-}
-
-const submitAnnotation = () => {
-
 }
 
 export default RightBar;
