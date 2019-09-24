@@ -179,6 +179,7 @@ const onMouseMove = (
           const uuid = uuidv4();
           annotations.push({
             pokemon: undefined,
+            human: undefined,
             type: ANNOTATION_TYPE_POKEMON,
             // x1y1: mousePos.x,
             // x1y2: mousePos.y,
@@ -218,11 +219,11 @@ const onMouseUp = (
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   if (mouseDown) {
-    if (mouseDraw) {      
+    if (mouseDraw) {     
+      setSelectedAnnotationName(latestAnnotation.name);
       setAnnotationCount(annotationCount + 1);
       setMouseDraw(false);
     }
-    setSelectedAnnotationName(latestAnnotation.name);
     setMouseDown(false);
   }
 };

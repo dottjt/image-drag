@@ -1,4 +1,13 @@
 const typeDefs = `
+  type User {
+    id: ID!
+    display_name: String!
+    email: String!
+    password: String!
+    providers: [Provider]
+    admin: Boolean
+  }
+
   type Image {
     id: ID
     url: String
@@ -10,13 +19,15 @@ const typeDefs = `
   }
 
   input AnnotationInput {
-    pokemon_id: String 
+    pokemon_id: ID
+    human_id: ID
+    image_id: ID
 
     name: String
     type: String
     stroke: String
     key: String
-    
+
     x: Int
     y: Int
     width: Int

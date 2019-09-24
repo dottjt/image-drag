@@ -9,6 +9,8 @@ declare module PropTypes {
   export type IHomeProps = {}
   export type IAboutProps = {}
 
+  export type INavBarProps = {}
+
   // IMAGE ANNOTATOR
   export type IImageAnnotatorProps = {
     image_id?: string,
@@ -30,8 +32,6 @@ declare module PropTypes {
 
     selectedAnnotationName: string,
     setSelectedAnnotationName: any,
-
-    forceUpdate: any,
   }
   export type IImageAnnotatorState = {
     mouseDown: boolean,

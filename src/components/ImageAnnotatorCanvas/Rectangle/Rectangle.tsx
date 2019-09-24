@@ -12,21 +12,12 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
 }: any) => {
   const rect: any = useRef();
 
-  React.useEffect(() => {
-    console.log(isSelected)
+  useEffect(() => {
     if (isSelected) {
       tRef.current.setNode(rect.current);
       tRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-
-  // useEffect(() => {
-  //   if (isSelected) {
-  //     // we need to attach transformer manually
-  //     rect.current.setNode(shapeRef.current);
-  //     rect.current.getLayer().batchDraw();
-  //   }
-  // }, [])
 
   return (
     <Rect
@@ -39,7 +30,7 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
       // otherwise Transformer will change it
       scaleX={1}
       scaleY={1}
-      stroke={annotation.stroke} // 
+      stroke={isSelected ? '#3DF6FF' : '#00A3AA'} // annotation.stroke
       strokeWidth={5}
       name={annotation.name}
       
@@ -74,15 +65,14 @@ const handleChange = (evt: Konva.KonvaEventObject<DragEvent | Event>, onTransfor
 
 // if use rect.draw(), the new rectangle will cover its transformer
 const handleMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>, rect: any) => {
-  rect.current.stroke('#3DF6FF');
+  // rect.current.stroke('#3DF6FF');
   rect.current.getStage().container().style.cursor = 'move';
-
   // rect.draw();
   rect.current.getLayer().draw();
 };
 
 const handleMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>, rect: any) => {
-  rect.current.stroke('#00A3AA');
+  // rect.current.stroke('#00A3AA');
   rect.current.getStage().container().style.cursor = 'crosshair';
   // rect.draw();
   rect.current.getLayer().draw();

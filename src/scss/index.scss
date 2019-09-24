@@ -13,15 +13,20 @@ body {
   // padding: 0.5rem;
 }
 
+.layout__navbar {
+  display: flex;
+  border-bottom: 1px solid lightgrey;
+}
+
 .layout__annotation {
   display: flex;
   justify-content: space-between;
 
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // bottom: 0;
 }
 
 .layout__annotation__left {

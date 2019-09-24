@@ -1,15 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { Stage, Layer, Image } from 'react-konva';
-import Konva from 'konva';
-import useImage from 'use-image';
 
 import { SUBMIT_ANNOTATIONS } from '../../graphql/mutations';
-import { ANNOTATION_TYPE_POKEMON } from '../../util/const';
+import { ANNOTATION_TYPE_POKEMON, randomKaomoji } from '../../util/const';
+import { generateInputAnnotations } from '../../util/helper';
 
 import SearchPokemon from './SearchPokemon';
 import SelectAnnotation from './SelectAnnotation';
 import SelectAnnotationType from './SelectAnnotationType';
+// import { GET_NEW_IMAGE } from '../../graphql/queries';
 
 const RightBar:FC<PropTypes.IRightBarProps> = ({ 
   annotations,
@@ -23,12 +22,14 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
   const [pokemonSearchString, setPokemonSearchString] = useState('');
   const [submitAnnotations] = useMutation(SUBMIT_ANNOTATIONS);
 
+  const [kaomoji, setKaomoji] = useState(randomKaomoji());
+
   return (
     <div className='right_bar'>
       {!selectedAnnotation && (
         <div className='right_bar__section'>
           <h4>Please draw an annotation first.</h4>
-          <h5>ฅ(＾・ω・＾ฅ)</h5>
+          <h5>{kaomoji}</h5>
         </div>
       )}
       {selectedAnnotation && (
@@ -77,8 +78,13 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
         <div className='right_bar__section'>
           <div 
             className='right_bar__section--submit' 
-            onClick={() => submitAnnotations({ variables: { annotations } })}>
-              Submit
+            onClick={() => {
+              setKaomoji(randomKaomoji());
+              const inputAnnotations = generateInputAnnotations(annotations);
+              submitAnnotations({ variables: { inputAnnotations } });
+              setAnnotations([]);
+            }}>
+              Submit {kaomoji}
           </div>
         </div>
       )}

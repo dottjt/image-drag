@@ -1,9 +1,4 @@
-# MYOB
-
-Thank you for reading my coding exercise! It's super basic, but I imagine it will provide you with enough information to evaluate my desgin, coding and testing skills.
-
-https://nostalgic-boyd-9461d5.netlify.com/
-
+# POKEMONML
 
 ## Build Instructions
 
@@ -79,3 +74,9 @@ const SignUp: FC = () => {
 };
 
 export default SignUp; -->
+
+
+
+  // NOTE: Force Update Function
+  const [, updateState] = useState<{}>();
+  const forceUpdate = useCallback(() => updateState({}), []);

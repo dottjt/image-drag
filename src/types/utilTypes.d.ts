@@ -1,4 +1,19 @@
 declare namespace Util {
+  export type User = {
+    id: string;
+    display_name: string;
+    email: string;
+    password: string;
+    providers: Provider[];
+    admin: boolean;
+  }
+
+  export type Provider = {
+    provider: string;
+    user_id: string;
+    id: string;
+  }
+
   export type Image = {
     url: string;
     type: string;
