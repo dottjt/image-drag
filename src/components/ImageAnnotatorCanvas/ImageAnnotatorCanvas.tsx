@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef, useEffect, useCallback } from 'react';
 import Konva from 'konva';
-import { Stage, Layer, Image, } from 'react-konva';
+import { Stage, Layer, Image, Transformer } from 'react-konva';
 import uuidv4 from 'uuid/v4';
 import useImage from 'use-image';
 
@@ -91,12 +91,13 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
                   onSelectAnnotation={() => setSelectedAnnotationName(annotation.name)}
                   trRef={trRef}
                 />
-                {annotation.name === selectedAnnotationName && (
+                {/* {annotation.name === selectedAnnotationName && ( */}
+                  {/* // <Transformer ref={trRef}/> */}
                   <RectTransformer
                     selectedAnnotationName={selectedAnnotationName}
                     trRef={trRef}
                   />
-                )}
+                {/* )} */}
               </React.Fragment>
             ))}
           </Layer>

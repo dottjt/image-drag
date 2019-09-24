@@ -20,10 +20,11 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
   }, [isSelected]);
 
   return (
-    // <Group>
-    //   {isSelected && (
-    //     <Text>{annotation.name}</Text>
-    //   )}
+    <Group>
+      {/* {isSelected && (
+        <Text fontSize={60} text="`HEYYYYYYYYYYYYYYYYYYYYYYY`"
+        wrap="char" align="center" />
+      )} */}
       <Rect
         x={annotation.x}
         y={annotation.y}
@@ -49,7 +50,7 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
 
         ref={rect}
       />
-    // </Group>
+    </Group>
   );
 }
 
