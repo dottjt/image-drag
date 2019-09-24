@@ -50,4 +50,4 @@ const typeDefs = `
   }
 `;
 
-export default index;
+export default typeDefs;

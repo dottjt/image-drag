@@ -22,10 +22,16 @@ declare module PropTypes {
     annotationCount: number,
     setAnnotationCount: any,
 
+    setSelectedPokemon: any,
+    setSelectedAnnotation: any,
+    setSelectedAnnotationType: any,
+
+    selectedShapeName: string,
+    setSelectedShapeName: any,
+
     forceUpdate: any,
   }
   export type IImageAnnotatorState = {
-    selectedShapeName: string,
     mouseDown: boolean,
     mouseDraw: boolean,
     newRectX: number,
@@ -49,6 +55,15 @@ declare module PropTypes {
   // RIGHT BAR
   export type IRightBarProps = {
     annotations: Util.Annotation[],
+
+    selectedAnnotation?: Util.Annotation,
+    setSelectedAnnotation: any,
+
+    selectedAnnotationType: any,
+    setSelectedAnnotationType: any,
+
+    selectedPokemon: any,
+    setSelectedPokemon: any,
   }
   export type ISelectPokemonProps = {
     pokemonSearchString: string,
@@ -66,5 +81,9 @@ declare module PropTypes {
     annotations: Util.Annotation[],
     selectedAnnotation?: Util.Annotation,
     setSelectedAnnotation: any,
+  }
+  export type ISelectAnnotationTypeProps = {
+    selectedAnnotationType?: Util.OptionType,
+    setSelectedAnnotationType: any,
   }
 }

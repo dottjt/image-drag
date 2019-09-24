@@ -7,13 +7,25 @@ import useImage from 'use-image';
 import Rectangle from './Rectangle/Rectangle';
 import RectTransformer from './Rectangle/RectTransformer';
 
+import { ANNOTATION_TYPE_POKEMON } from '../../util/const';
+import { generateOptionType } from '../../util/helper';
+
 const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
+  images,
   currentImage,
+
   annotations,
   setAnnotations,
 
   annotationCount,
   setAnnotationCount,
+
+  setSelectedPokemon,
+  setSelectedAnnotation,
+  setSelectedAnnotationType,
+
+  selectedShapeName,
+  setSelectedShapeName,
 
   forceUpdate,
 }: PropTypes.IImageAnnotatorProps) => {
@@ -21,7 +33,6 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
   const stage: any = useRef();
   const tRef: any = useRef();
 
-  const [selectedShapeName, setSelectedShapeName] = useState<string>('');
   const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [mouseDraw, setMouseDraw] = useState<boolean>(false);
   const [newRectX, setNewRectX] = useState<number>(0);
@@ -30,8 +41,6 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
   useEffect(() => {
     img.current.moveToBottom();
   }); 
-
-  console.log(selectedShapeName);
 
   return (
     <div className='image__annotator'>
@@ -63,10 +72,17 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
             forceUpdate,
           )}
           onMouseUp={() => onMouseUp(
+            annotations[annotationCount],
+            setSelectedPokemon,
+            setSelectedAnnotation,
+            setSelectedAnnotationType,
+
             annotationCount,
             setAnnotationCount,
+
             mouseDraw,
             setMouseDraw,
+
             mouseDown,
             setMouseDown,
           )}
@@ -194,6 +210,11 @@ const onMouseMove = (
 };
 
 const onMouseUp = (
+  latestAnnotation: Util.Annotation,
+  setSelectedPokemon: any,
+  setSelectedAnnotation: any,
+  setSelectedAnnotationType: any,
+
   annotationCount: number, 
   setAnnotationCount: React.Dispatch<React.SetStateAction<number>>,
 
@@ -203,9 +224,12 @@ const onMouseUp = (
   mouseDown: boolean,
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-
   if (mouseDown) {
     if (mouseDraw) {
+      setSelectedAnnotation(latestAnnotation);
+      setSelectedAnnotationType(generateOptionType(ANNOTATION_TYPE_POKEMON, ANNOTATION_TYPE_POKEMON));
+      setSelectedPokemon(undefined);
+
       setAnnotationCount(annotationCount + 1);
       setMouseDraw(false);
     }

@@ -8,19 +8,23 @@ import { SUBMIT_ANNOTATIONS } from '../../graphql/mutations';
 
 import SelectPokemon from './SelectPokemon';
 import SelectAnnotation from './SelectAnnotation';
+import SelectAnnotationType from './SelectAnnotationType';
 
 const RightBar:FC<PropTypes.IRightBarProps> = ({ 
   annotations,
+
+  selectedAnnotation, 
+  setSelectedAnnotation,
+
+  selectedAnnotationType,
+  setSelectedAnnotationType,
+
+  selectedPokemon,
+  setSelectedPokemon,
 }: PropTypes.IRightBarProps) => {
 
-  const [selectedAnnotation, setSelectedAnnotation] = useState(undefined);
-  const [selectedPokemon, setSelectedPokemon] = useState(undefined);
-
   const [pokemonSearchString, setPokemonSearchString] = useState('');
-
   const [submitAnnotations] = useMutation(SUBMIT_ANNOTATIONS);
-
-  console.log('right bar refersh')
 
   return (
     <div className='right_bar'>
@@ -38,6 +42,17 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
       {selectedAnnotation && (
         <div className='right_bar__section'>
           <h3 className='right_bar__section__title'>
+            Select Annotation Type
+          </h3>
+          <SelectAnnotationType
+            selectedAnnotationType={selectedAnnotationType}
+            setSelectedAnnotationType={setSelectedAnnotationType}
+          />
+        </div>
+      )}
+      {annotations.length > 0 && selectedAnnotation && selectedAnnotationType && (
+        <div className='right_bar__section'>
+          <h3 className='right_bar__section__title'>
             Select Pokemon
           </h3>
           <SelectPokemon
@@ -49,7 +64,7 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
           />
         </div>
       )}
-      {annotations.length > 0 && (
+      {annotations.length > 0 && selectedAnnotation && selectedAnnotationType && (
         <div className='right_bar__section'>
           <button 
             className='right_bar__section--submit' 

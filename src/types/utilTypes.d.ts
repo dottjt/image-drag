@@ -32,4 +32,9 @@ declare namespace Util {
     name: string;
     sprite: string;
   }
+
+  export type OptionType = { 
+    label: string; 
+    value: string;
+  };
 }
