@@ -7,12 +7,12 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
   pokemonSearchString,
   setPokemonSearchString,
 
-  selectedPokemonSearch, 
-  setSelectedPokemonSearch,
+  pokemonSearchPosition,
+  setPokemonSearchPosition,
 
   annotations,
   setAnnotations,
-  
+
   selectedAnnotation,
 }: PropTypes.ISearchPokemonProps) => {
 
@@ -26,28 +26,32 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
         className='select__input'
         type='text'
         value={pokemonSearchString} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setPokemonSearchPosition(undefined);
           setPokemonSearchString(event.target.value);
         }}
         onKeyDown={(event) => {
           switch(event.keyCode) {
             case 38: { // ArrowUp
-
+              if (pokemonSearchPosition === undefined || pokemonSearchPosition === 0) return;
+              setPokemonSearchPosition(pokemonSearchPosition - 1);
             };
             case 40: { // ArrowDown
-
+              if (pokemonSearchPosition === undefined || pokemonSearchPosition === data.getPokemon.length - 1) return;
+              setPokemonSearchPosition(pokemonSearchPosition + 1);
             };
-          }  
+          }
         }}
       />
       {selectedAnnotation && selectedAnnotation.pokemon && !(data.getPokemon.length > 0) &&
         (
-          !selectedAnnotation.pokemon.name.includes(pokemonSearchString) || 
+          !selectedAnnotation.pokemon.name.includes(pokemonSearchString) ||
           pokemonSearchString === ''
         ) && (
           <SearchPokemonResult
             pokemon={selectedAnnotation.pokemon}
             isSelectedPokemon
             setSelectedPokemon={() => null}
+            pokemonSearchPosition={undefined}
           />
         )
       }
@@ -64,9 +68,10 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
         <div className='select__pokemon__results'>
           {data.getPokemon.map((pokemon: Util.Pokemon) => {
             return (
-              <SearchPokemonResult 
+              <SearchPokemonResult
                 key={pokemon.id}
                 pokemon={pokemon}
+                pokemonSearchPosition={pokemonSearchPosition}
                 isSelectedPokemon={selectedAnnotation && selectedAnnotation.pokemon && selectedAnnotation.pokemon.id === pokemon.id}
                 setSelectedPokemon={(pokemon: Util.Pokemon) => {
                   if (selectedAnnotation) {
@@ -92,13 +97,19 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
 
 const SearchPokemonResult:FC<PropTypes.ISearchPokemonResultProps> = ({
   pokemon,
-  setSelectedPokemon,
   isSelectedPokemon,
+  setSelectedPokemon,
+  pokemonSearchPosition,
 }: any) => (
   <div
-    className={`select__pokemon__result ${isSelectedPokemon ? 'select__pokemon__result--selected' : ''}`}
+    className={`
+      select__pokemon__result
+      ${pokemonSearchPosition ? 'select__pokemon__result--pre-selected': ''}
+      ${isSelectedPokemon ? 'select__pokemon__result--selected' : ''}
+    `}
     onClick={(event) => setSelectedPokemon(pokemon)}
     // NOTE: I don't know if this does anything, will have to look into it.
+    // Maybe this needs to be onKeyDown?
     onKeyPress={(event) => event.keyCode === 13 ? setSelectedPokemon(pokemon) : null}
   >
     <h4 className='select__pokemon__result--name'>{pokemon.name}</h4>
@@ -107,7 +118,7 @@ const SearchPokemonResult:FC<PropTypes.ISearchPokemonResultProps> = ({
 );
 
 
-  
+
 
 
 

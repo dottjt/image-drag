@@ -1,6 +1,6 @@
 import React, { FC, useRef, useEffect } from 'react';
 import Konva from 'konva';
-import { Rect } from 'react-konva';
+import { Group, Rect, Text } from 'react-konva';
 
 
 const Rectangle: FC<PropTypes.IRectangleProps> = ({
@@ -8,43 +8,48 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
   isSelected,
   onTransform,
   onSelectAnnotation,
-  tRef,
+  trRef,
 }: any) => {
   const rect: any = useRef();
 
   useEffect(() => {
     if (isSelected) {
-      tRef.current.setNode(rect.current);
-      tRef.current.getLayer().batchDraw();
+      trRef.current.setNode(rect.current);
+      trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
 
   return (
-    <Rect
-      x={annotation.x}
-      y={annotation.y}
-      width={annotation.width}
-      height={annotation.height}
+    // <Group>
+    //   {isSelected && (
+    //     <Text>{annotation.name}</Text>
+    //   )}
+      <Rect
+        x={annotation.x}
+        y={annotation.y}
+        width={annotation.width}
+        height={annotation.height}
 
-      // force no scaling
-      // otherwise Transformer will change it
-      scaleX={1}
-      scaleY={1}
-      stroke={isSelected ? '#3DF6FF' : '#00A3AA'} // annotation.stroke
-      strokeWidth={5}
-      name={annotation.name}
-      
-      // save state on dragend or transformend
-      onDragEnd={(evt) => handleChange(evt, onTransform)}
-      onTransformEnd={(evt) => handleChange(evt, onTransform)}
-      onMouseEnter={(evt) => handleMouseEnter(evt, rect)}
-      onMouseLeave={(evt) => handleMouseLeave(evt, rect)}
+        // force no scaling
+        // otherwise Transformer will change it
+        scaleX={1}
+        scaleY={1}
+        stroke={isSelected ? '#3DF6FF' : '#00A3AA'} // annotation.stroke
+        strokeWidth={5}
+        name={annotation.name}
 
-      onClick={onSelectAnnotation}
-      draggable
-      
-      ref={rect}
-    />
+        // save state on dragend or transformend
+        onDragEnd={(evt) => handleChange(evt, onTransform)}
+        onTransformEnd={(evt) => handleChange(evt, onTransform)}
+        onMouseEnter={(evt) => handleMouseEnter(evt, rect)}
+        onMouseLeave={(evt) => handleMouseLeave(evt, rect)}
+
+        onClick={onSelectAnnotation}
+        draggable
+
+        ref={rect}
+      />
+    // </Group>
   );
 }
 

@@ -27,7 +27,7 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
 }: PropTypes.IImageAnnotatorCanvasProps) => {
   const img: any = useRef();
   const stage: any = useRef();
-  const tRef: any = useRef();
+  const trRef: any = useRef();
 
   const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [mouseDraw, setMouseDraw] = useState<boolean>(false);
@@ -36,7 +36,7 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
 
   useEffect(() => {
     img.current.moveToBottom();
-  }); 
+  });
 
   return (
     <div className='image__annotator'>
@@ -83,19 +83,22 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
         >
           <Layer>
             {annotations.map((annotation: Util.Annotation, i: number) => (
-              <Rectangle
-                key={i}
-                annotation={annotation}
-                isSelected={annotation.name === selectedAnnotationName}
-                onTransform={(newProps: any) => handleRectChange(i, newProps, annotations, setAnnotations)}
-                onSelectAnnotation={() => setSelectedAnnotationName(annotation.name)}
-                tRef={tRef}
-              />
+              <React.Fragment key={i}>
+                <Rectangle
+                  annotation={annotation}
+                  isSelected={annotation.name === selectedAnnotationName}
+                  onTransform={(newProps: any) => handleRectChange(i, newProps, annotations, setAnnotations)}
+                  onSelectAnnotation={() => setSelectedAnnotationName(annotation.name)}
+                  trRef={trRef}
+                />
+                {annotation.name === selectedAnnotationName && (
+                  <RectTransformer
+                    selectedAnnotationName={selectedAnnotationName}
+                    trRef={trRef}
+                  />
+                )}
+              </React.Fragment>
             ))}
-            <RectTransformer 
-              selectedAnnotationName={selectedAnnotationName} 
-              tRef={tRef}
-            />
           </Layer>
           <Layer ref={img}>
             <AnnotationImage currentImage={currentImage} />
@@ -108,7 +111,7 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
 
 const onMouseDown = (
   evt: Konva.KonvaEventObject<TouchEvent | MouseEvent>,
-  annotations: Util.Annotation[], 
+  annotations: Util.Annotation[],
   setAnnotations: React.Dispatch<React.SetStateAction<Util.Annotation[]>>,
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>,
   setNewRectX: React.Dispatch<React.SetStateAction<number>>,
@@ -143,9 +146,9 @@ const onMouseDown = (
 };
 
 const handleRectChange = (
-  index: number, 
+  index: number,
   newProps: any,
-  annotations: Util.Annotation[], 
+  annotations: Util.Annotation[],
   setAnnotations: React.Dispatch<React.SetStateAction<Util.Annotation[]>>,
 ) => {
   annotations[index] = {
@@ -169,7 +172,7 @@ const onMouseMove = (
   forceUpdate: any,
 ): void => {
 
-  // So the issue is that within mouseDown, it will automatically 
+  // So the issue is that within mouseDown, it will automatically
   if (mouseDown) {
     const stage = event.target.getStage();
     if (stage) {
@@ -196,7 +199,7 @@ const onMouseMove = (
         }
         annotations[annotationCount].width = mousePos.x - newRectX;
         annotations[annotationCount].height = mousePos.y - newRectY;
-        
+
         setMouseDraw(true);
         setAnnotations(annotations);
         forceUpdate();
@@ -209,17 +212,17 @@ const onMouseUp = (
   latestAnnotation: Util.Annotation,
   setSelectedAnnotationName: React.Dispatch<React.SetStateAction<string>>,
 
-  annotationCount: number, 
+  annotationCount: number,
   setAnnotationCount: React.Dispatch<React.SetStateAction<number>>,
 
-  mouseDraw: boolean, 
+  mouseDraw: boolean,
   setMouseDraw: React.Dispatch<React.SetStateAction<boolean>>,
 
   mouseDown: boolean,
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   if (mouseDown) {
-    if (mouseDraw) {     
+    if (mouseDraw) {
       setSelectedAnnotationName(latestAnnotation.name);
       setAnnotationCount(annotationCount + 1);
       setMouseDraw(false);

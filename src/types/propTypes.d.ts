@@ -46,21 +46,21 @@ declare module PropTypes {
   }
   export type IRectTransformerProps = {
     selectedAnnotationName: string,
-    tRef: any,
+    trRef: any,
   }
   export type IRectangleProps = {
     annotation: Util.Annotation,
     isSelected: boolean,
     onTransform: any,
     onSelectAnnotation: any,
-    tRef: any,
+    trRef: any,
   }
 
   // RIGHT BAR
   export type IRightBarProps = {
     annotations: Util.Annotation[],
     setAnnotations: any,
-    
+
     selectedAnnotation?: Util.Annotation,
 
     setSelectedAnnotationName: any,
@@ -69,8 +69,8 @@ declare module PropTypes {
     pokemonSearchString: string,
     setPokemonSearchString: any,
 
-    selectedPokemonSearch?: number,
-    setSelectedPokemonSearch: any,
+    pokemonSearchPosition?: number,
+    setPokemonSearchPosition: any,
 
     annotations: Util.Annotation[],
     setAnnotations: any,
@@ -80,6 +80,7 @@ declare module PropTypes {
     pokemon?: Util.Pokemon,
     setSelectedPokemon: any,
     isSelectedPokemon?: boolean;
+    pokemonSearchPosition?: number;
   }
   export type ISelectAnnotationProps = {
     annotations: Util.Annotation[],

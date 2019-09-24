@@ -10,7 +10,7 @@ import SelectAnnotation from './SelectAnnotation';
 import SelectAnnotationType from './SelectAnnotationType';
 // import { GET_NEW_IMAGE } from '../../graphql/queries';
 
-const RightBar:FC<PropTypes.IRightBarProps> = ({ 
+const RightBar:FC<PropTypes.IRightBarProps> = ({
   annotations,
   setAnnotations,
 
@@ -20,7 +20,7 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
 }: PropTypes.IRightBarProps) => {
 
   const [pokemonSearchString, setPokemonSearchString] = useState('');
-  const [selectedPokemonSearch, setSelectedPokemonSearch] = useState(undefined);
+  const [pokemonSearchPosition, setPokemonSearchPosition] = useState(undefined);
   const [submitAnnotations] = useMutation(SUBMIT_ANNOTATIONS);
 
   const [kaomoji, setKaomoji] = useState(randomKaomoji());
@@ -41,7 +41,7 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
           <SelectAnnotation
             annotations={annotations}
             setSelectedAnnotationName={setSelectedAnnotationName}
-            
+
             selectedAnnotation={selectedAnnotation}
           />
         </div>
@@ -54,7 +54,7 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
           <SelectAnnotationType
             annotations={annotations}
             setAnnotations={setAnnotations}
-            
+
             selectedAnnotation={selectedAnnotation}
           />
         </div>
@@ -68,25 +68,25 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
             pokemonSearchString={pokemonSearchString}
             setPokemonSearchString={setPokemonSearchString}
 
-            selectedPokemonSearch={selectedPokemonSearch}
-            setSelectedPokemonSearch={setSelectedPokemonSearch}
+            pokemonSearchPosition={pokemonSearchPosition}
+            setPokemonSearchPosition={setPokemonSearchPosition}
 
             annotations={annotations}
             setAnnotations={setAnnotations}
-            
+
             selectedAnnotation={selectedAnnotation}
           />
         </div>
       )}
-      {annotations.length > 0 && 
-        selectedAnnotation && selectedAnnotation.type && 
+      {annotations.length > 0 &&
+        selectedAnnotation && selectedAnnotation.type &&
         (
           (selectedAnnotation && selectedAnnotation.pokemon) ||
           (selectedAnnotation && selectedAnnotation.human)
         ) && (
         <div className='right_bar__section'>
-          <div 
-            className='right_bar__section--submit' 
+          <div
+            className='right_bar__section--submit'
             onClick={() => {
               setKaomoji(randomKaomoji());
               const inputAnnotations = generateInputAnnotations(annotations);
@@ -99,7 +99,7 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
       )}
 
       {/* {annotations.length > 0 && <hr/>} */}
-      
+
       {/* {annotations.map((annotation: Util.Annotation) => {
         return (
           <div className='right_bar__annotations'>

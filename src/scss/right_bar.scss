@@ -5,10 +5,10 @@
   border-left: 1px solid lightgrey;
 }
 .right_bar__section {
-  
+
 }
 .right_bar__section__title {
-  
+
 }
 
 .right_bar__section--submit {
@@ -29,12 +29,16 @@
 .select__pokemon {
   .select__pokemon__results {
 
-  }  
+  }
 }
 
 .select__pokemon__result--selected {
   border: 1px solid rgb(113, 255, 47)!important;
 }
+.select__pokemon__result--pre-selected {
+  border: 1px solid black!important;
+}
+
 .select__pokemon__result {
   display: flex;
   justify-content: space-between;
@@ -63,7 +67,7 @@
 }
 
 .select__annotation {
-  
+
 }
 
 .select__input {
