@@ -3,7 +3,7 @@ import { PulseLoader } from 'react-spinners';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_POKEMON } from '../../graphql/queries';
 
-const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
+const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
   pokemonSearchString,
   setPokemonSearchString,
 
@@ -11,7 +11,7 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
   setAnnotations,
   
   selectedAnnotation,
-}: PropTypes.ISelectPokemonProps) => {
+}: PropTypes.ISearchPokemonProps) => {
 
   const { data, loading } = useQuery(GET_POKEMON, {
     variables: { pokemonName: pokemonSearchString },
@@ -26,9 +26,9 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
           setPokemonSearchString(event.target.value);
         }}
       />
-      {selectedAnnotation.pokemon &&
+      {selectedAnnotation && selectedAnnotation.pokemon &&
         (!selectedAnnotation.pokemon.name.includes(pokemonSearchString) || pokemonSearchString === '') && (
-          <SelectPokemonResult
+          <SearchPokemonResult
             pokemon={selectedAnnotation.pokemon}
             isSelectedPokemon
             setSelectedPokemon={() => null}
@@ -47,11 +47,22 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
         <div className='select__pokemon__results'>
           {data.getPokemon.map((pokemon: Util.Pokemon) => {
             return (
-              <SelectPokemonResult 
+              <SearchPokemonResult 
                 key={pokemon.id}
                 pokemon={pokemon}
-                isSelectedPokemon={selectedPokemon && selectedPokemon.id === pokemon.id}
-                setSelectedPokemon={setSelectedPokemon}
+                isSelectedPokemon={selectedAnnotation && selectedAnnotation.pokemon && selectedAnnotation.pokemon.id === pokemon.id}
+                setSelectedPokemon={(pokemon: Util.Pokemon) => {
+                  if (selectedAnnotation) {
+                    const updateAnnotations = annotations.map((annotation: Util.Annotation) => (
+                      annotation.name === selectedAnnotation.name ? (
+                        { ...annotation, pokemon, }
+                      ) : (
+                        annotation
+                      )
+                    ));
+                    setAnnotations(updateAnnotations);  
+                  }
+                }}
               />
             );
           })}
@@ -61,7 +72,7 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
   )
 }
 
-const SelectPokemonResult:FC<PropTypes.ISelectPokemonResultProps> = ({
+const SearchPokemonResult:FC<PropTypes.ISearchPokemonResultProps> = ({
   pokemon,
   setSelectedPokemon,
   isSelectedPokemon,
@@ -80,4 +91,4 @@ const SelectPokemonResult:FC<PropTypes.ISelectPokemonResultProps> = ({
 
 
 
-export default SelectPokemon;
+export default SearchPokemon;

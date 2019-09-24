@@ -10,9 +10,9 @@ import RectTransformer from './Rectangle/RectTransformer';
 import { ANNOTATION_TYPE_POKEMON, annotationTypeReadable } from '../../util/const';
 import { generateOptionType } from '../../util/helper';
 
-const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
-  images,
+const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
   currentImage,
+  selectedAnnotation,
 
   annotations,
   setAnnotations,
@@ -24,7 +24,7 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
   setSelectedAnnotationName,
 
   forceUpdate,
-}: PropTypes.IImageAnnotatorProps) => {
+}: PropTypes.IImageAnnotatorCanvasProps) => {
   const img: any = useRef();
   const stage: any = useRef();
   const tRef: any = useRef();
@@ -40,10 +40,10 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
 
   return (
     <div className='image__annotator'>
-      <div id='app'>
+      <div id='image__annotator__app'>
         <Stage
           ref={stage}
-          container='app'
+          container='image__annotator__app'
           width={currentImage.width}
           height={currentImage.height}
 
@@ -124,7 +124,7 @@ const onMouseDown = (
         setMouseDown(true);
         setNewRectX(mousePos.x);
         setNewRectY(mousePos.y);
-        setSelectedAnnotationName('');
+        // setSelectedAnnotationName('');
       }
     }
   }
@@ -137,9 +137,9 @@ const onMouseDown = (
   const annotation = annotations.find((r: Util.Annotation): boolean => r.name === name);
   if (annotation) {
     setSelectedAnnotationName(name);
-  } else {
+  } /* else {
     setSelectedAnnotationName('');
-  }
+  } */
 };
 
 const handleRectChange = (

@@ -9,17 +9,19 @@ export const GET_CURRENT_USER = gql`{
   }
 }`;
 
-export const GET_IMAGES = gql`{
-  getImages {
-    id
-    url
-    type
-    height
-    width
-    # annotations
-    # annotationCategories  
+export const GET_NEW_IMAGE = gql`
+  query GetNewImage($image_id: String) {
+    getNewImage(image_id: $image_id) {
+      id
+      url
+      type
+      height
+      width
+      # annotations
+      # annotationCategories  
+    }
   }
-}`;
+`;
 
 export const GET_POKEMON = gql`
   query GetPokemon($pokemonName: String) {

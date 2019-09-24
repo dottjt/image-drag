@@ -39,7 +39,7 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
       // otherwise Transformer will change it
       scaleX={1}
       scaleY={1}
-      stroke={annotation.stroke}
+      stroke={annotation.stroke} // 
       strokeWidth={5}
       name={annotation.name}
       

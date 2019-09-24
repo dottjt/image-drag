@@ -10,6 +10,7 @@ declare namespace Util {
 
   export type Annotation = {
     pokemon?: Pokemon;
+    human?: Human;
 
     name: string;
     type: string;
@@ -25,6 +26,13 @@ declare namespace Util {
     // x1y2: number;
     // x2y1: number;
     // x2y2: number;
+  }
+
+  export type Human = {
+    id: string;
+    human_id: string;
+    name: string;
+    sprite: string;
   }
 
   export type Pokemon = {

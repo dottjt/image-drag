@@ -5,26 +5,28 @@ declare module PropTypes {
     route: any,
   }
 
-  // ANNOTATION
-  export type IAnnotationProps = {}
-
-  // GALLERY
-  export type IGalleryProps = {}
+  // HOME
+  export type IHomeProps = {}
+  export type IAboutProps = {}
 
   // IMAGE ANNOTATOR
   export type IImageAnnotatorProps = {
-    images: Util.Image[],
+    image_id?: string,
+  }
+
+  // GALLERY
+  export type IImageAnnotatorGalleryProps = {}
+
+  // IMAGE ANNOTATOR
+  export type IImageAnnotatorCanvasProps = {
     currentImage: Util.Image,
+    selectedAnnotation?: Util.Annotation,
 
     annotations: Util.Annotation[],
     setAnnotations: any,
 
     annotationCount: number,
     setAnnotationCount: any,
-
-    setSelectedPokemon: any,
-    setSelectedAnnotation: any,
-    setSelectedAnnotationType: any,
 
     selectedAnnotationName: string,
     setSelectedAnnotationName: any,
@@ -57,19 +59,19 @@ declare module PropTypes {
     annotations: Util.Annotation[],
     setAnnotations: any,
     
-    selectedAnnotation: Util.Annotation,
+    selectedAnnotation?: Util.Annotation,
 
-    setSelectedAnnotationName: string,
+    setSelectedAnnotationName: any,
   }
-  export type ISelectPokemonProps = {
+  export type ISearchPokemonProps = {
     pokemonSearchString: string,
     setPokemonSearchString: any,
 
     annotations: Util.Annotation[],
     setAnnotations: any,
-    selectedAnnotation: Util.Annotation,
+    selectedAnnotation?: Util.Annotation,
   }
-  export type ISelectPokemonResultProps = {
+  export type ISearchPokemonResultProps = {
     pokemon?: Util.Pokemon,
     setSelectedPokemon: any,
     isSelectedPokemon?: boolean;
@@ -82,6 +84,6 @@ declare module PropTypes {
   export type ISelectAnnotationTypeProps = {
     annotations: Util.Annotation[],
     setAnnotations: any,
-    selectedAnnotation: Util.Annotation,
+    selectedAnnotation?: Util.Annotation,
   }
 }

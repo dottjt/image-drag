@@ -1,6 +1,8 @@
 // RIGHT BAR
 .right_bar {
-  width: 200px;
+  width: 300px;
+  padding: 2rem;
+  border-left: 1px solid lightgrey;
 }
 .right_bar__section {
   
@@ -10,7 +12,16 @@
 }
 
 .right_bar__section--submit {
+  margin-top: 2rem;
+  display: inline-block;
   padding: 0.6rem;
+  border-radius: 4px;
+  border: 1px solid lightgrey;
+
+  cursor: pointer;
+}
+.right_bar__section--submit:hover {
+  border: 1px solid black;
 }
 
 
@@ -56,6 +67,7 @@
 }
 
 .select__input {
+  width: 200px;
   margin-bottom: 0.4rem;
   padding: 0.65rem;
   padding-left: 1rem;

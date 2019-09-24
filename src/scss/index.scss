@@ -5,18 +5,37 @@
   font-family: Arial, sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 .layout {
-  padding: 0.5rem;
+  // padding: 0.5rem;
 }
 
 .layout__annotation {
   display: flex;
   justify-content: space-between;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.layout__annotation__left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
 }
 
 @media screen and (min-width: 768px) {
   .layout {
-    padding: 4rem;
+    // padding: 4rem;
   }
   .payslip__top {
     flex-direction: row;
