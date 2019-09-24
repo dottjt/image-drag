@@ -7,6 +7,9 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
   pokemonSearchString,
   setPokemonSearchString,
 
+  selectedPokemonSearch, 
+  setSelectedPokemonSearch,
+
   annotations,
   setAnnotations,
   
@@ -25,9 +28,22 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
         value={pokemonSearchString} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setPokemonSearchString(event.target.value);
         }}
+        onKeyDown={(event) => {
+          switch(event.keyCode) {
+            case 38: { // ArrowUp
+
+            };
+            case 40: { // ArrowDown
+
+            };
+          }  
+        }}
       />
-      {selectedAnnotation && selectedAnnotation.pokemon &&
-        (!selectedAnnotation.pokemon.name.includes(pokemonSearchString) || pokemonSearchString === '') && (
+      {selectedAnnotation && selectedAnnotation.pokemon && !(data.getPokemon.length > 0) &&
+        (
+          !selectedAnnotation.pokemon.name.includes(pokemonSearchString) || 
+          pokemonSearchString === ''
+        ) && (
           <SearchPokemonResult
             pokemon={selectedAnnotation.pokemon}
             isSelectedPokemon
@@ -43,6 +59,7 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
           loading
         />
       )}
+      {!loading && pokemonSearchString.length > 0 && data.getPokemon.length === 0 && <h5>Sorry, this Pokemon doesn't exist!</h5>}
       {!loading && (
         <div className='select__pokemon__results'>
           {data.getPokemon.map((pokemon: Util.Pokemon) => {
@@ -60,7 +77,8 @@ const SearchPokemon:FC<PropTypes.ISearchPokemonProps> = ({
                         annotation
                       )
                     ));
-                    setAnnotations(updateAnnotations);  
+                    setPokemonSearchString('');
+                    setAnnotations(updateAnnotations);
                   }
                 }}
               />
@@ -80,6 +98,8 @@ const SearchPokemonResult:FC<PropTypes.ISearchPokemonResultProps> = ({
   <div
     className={`select__pokemon__result ${isSelectedPokemon ? 'select__pokemon__result--selected' : ''}`}
     onClick={(event) => setSelectedPokemon(pokemon)}
+    // NOTE: I don't know if this does anything, will have to look into it.
+    onKeyPress={(event) => event.keyCode === 13 ? setSelectedPokemon(pokemon) : null}
   >
     <h4 className='select__pokemon__result--name'>{pokemon.name}</h4>
     <img className='select__pokemon__result--sprite' src={pokemon.sprite} />

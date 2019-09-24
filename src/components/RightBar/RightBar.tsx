@@ -20,6 +20,7 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
 }: PropTypes.IRightBarProps) => {
 
   const [pokemonSearchString, setPokemonSearchString] = useState('');
+  const [selectedPokemonSearch, setSelectedPokemonSearch] = useState(undefined);
   const [submitAnnotations] = useMutation(SUBMIT_ANNOTATIONS);
 
   const [kaomoji, setKaomoji] = useState(randomKaomoji());
@@ -67,6 +68,9 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
             pokemonSearchString={pokemonSearchString}
             setPokemonSearchString={setPokemonSearchString}
 
+            selectedPokemonSearch={selectedPokemonSearch}
+            setSelectedPokemonSearch={setSelectedPokemonSearch}
+
             annotations={annotations}
             setAnnotations={setAnnotations}
             
@@ -74,7 +78,12 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
           />
         </div>
       )}
-      {annotations.length > 0 && selectedAnnotation && selectedAnnotation.type && (
+      {annotations.length > 0 && 
+        selectedAnnotation && selectedAnnotation.type && 
+        (
+          (selectedAnnotation && selectedAnnotation.pokemon) ||
+          (selectedAnnotation && selectedAnnotation.human)
+        ) && (
         <div className='right_bar__section'>
           <div 
             className='right_bar__section--submit' 

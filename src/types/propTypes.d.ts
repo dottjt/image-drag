@@ -32,6 +32,8 @@ declare module PropTypes {
 
     selectedAnnotationName: string,
     setSelectedAnnotationName: any,
+
+    forceUpdate: any,
   }
   export type IImageAnnotatorState = {
     mouseDown: boolean,
@@ -66,6 +68,9 @@ declare module PropTypes {
   export type ISearchPokemonProps = {
     pokemonSearchString: string,
     setPokemonSearchString: any,
+
+    selectedPokemonSearch?: number,
+    setSelectedPokemonSearch: any,
 
     annotations: Util.Annotation[],
     setAnnotations: any,
