@@ -12,6 +12,7 @@ declare namespace Util {
     pokemon?: Pokemon;
 
     name: string;
+    type: string;
     stroke: string;
     key: string;
 

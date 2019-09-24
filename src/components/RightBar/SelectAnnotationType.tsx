@@ -4,25 +4,34 @@ import { useMutation } from '@apollo/react-hooks';
 import Select from 'react-select';
 import { ValueType } from "react-select/src/types";
 
-import { ANNOTATION_TYPE_ARRAY } from '../../util/const';
+import { ANNOTATION_TYPE_ARRAY, annotationTypeReadable } from '../../util/const';
 import { generateOptionType } from '../../util/helper';
 
-
 const SelectAnnotationType:FC<PropTypes.ISelectAnnotationTypeProps> = ({ 
-  selectedAnnotationType,
-  setSelectedAnnotationType,
- }: PropTypes.ISelectAnnotationTypeProps) => {
+  annotations,
+  setAnnotations,
+  
+  selectedAnnotation,
+}: PropTypes.ISelectAnnotationTypeProps) => {
 
   const annotationTypeOptions: Util.OptionType[] = 
     ANNOTATION_TYPE_ARRAY.map((annotationType: string): Util.OptionType => 
-      generateOptionType(annotationType, annotationType));
+      generateOptionType(annotationType, annotationTypeReadable(annotationType)));
 
   return (
     <div className='select__annotation'>
       <Select
-        value={selectedAnnotationType}
+        value={selectedAnnotation.type}
         onChange={(selectedOption: ValueType<Util.OptionType>) => {
-          setSelectedAnnotationType(selectedOption);
+          const selectedOptionType = selectedOption as Util.OptionType;
+          const updateAnnotations = annotations.map((annotation: Util.Annotation) => (
+            annotation.name === selectedAnnotation.name ? (
+              { ...annotation, type: selectedOptionType.value }
+            ) : (
+              annotation
+            )
+          ));
+          setAnnotations(updateAnnotations);
         }}
         options={annotationTypeOptions}
       />

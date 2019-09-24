@@ -3,12 +3,12 @@ import { Transformer } from 'react-konva';
 
 
 const RectTransformer: FC<PropTypes.IRectTransformerProps> = ({
-  selectedShapeName,
+  selectedAnnotationName,
   tRef,
 }: PropTypes.IRectTransformerProps) => {
 
   useEffect(() => {
-    checkNode(tRef, selectedShapeName);
+    checkNode(tRef, selectedAnnotationName);
   })
 
   return (
@@ -19,10 +19,10 @@ const RectTransformer: FC<PropTypes.IRectTransformerProps> = ({
   );
 }
 
-const checkNode = (tRef: any, selectedShapeName: string) => {
+const checkNode = (tRef: any, selectedAnnotationName: string) => {
   // here we need to manually attach or detach Transformer node
   const stage = tRef.current.getStage();
-  const selectedNode = stage.findOne(`.${selectedShapeName}`);
+  const selectedNode = stage.findOne(`.${selectedAnnotationName}`);
   // do nothing if selected node is already attached
   if (selectedNode === tRef.current.node()) {
     return;

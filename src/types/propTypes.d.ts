@@ -26,8 +26,8 @@ declare module PropTypes {
     setSelectedAnnotation: any,
     setSelectedAnnotationType: any,
 
-    selectedShapeName: string,
-    setSelectedShapeName: any,
+    selectedAnnotationName: string,
+    setSelectedAnnotationName: any,
 
     forceUpdate: any,
   }
@@ -41,7 +41,7 @@ declare module PropTypes {
     currentImage: Util.Image,
   }
   export type IRectTransformerProps = {
-    selectedShapeName: string,
+    selectedAnnotationName: string,
     tRef: any,
   }
   export type IRectangleProps = {
@@ -55,22 +55,19 @@ declare module PropTypes {
   // RIGHT BAR
   export type IRightBarProps = {
     annotations: Util.Annotation[],
+    setAnnotations: any,
+    
+    selectedAnnotation: Util.Annotation,
 
-    selectedAnnotation?: Util.Annotation,
-    setSelectedAnnotation: any,
-
-    selectedAnnotationType: any,
-    setSelectedAnnotationType: any,
-
-    selectedPokemon: any,
-    setSelectedPokemon: any,
+    setSelectedAnnotationName: string,
   }
   export type ISelectPokemonProps = {
     pokemonSearchString: string,
     setPokemonSearchString: any,
 
-    selectedPokemon?: Util.Pokemon,
-    setSelectedPokemon: any,
+    annotations: Util.Annotation[],
+    setAnnotations: any,
+    selectedAnnotation: Util.Annotation,
   }
   export type ISelectPokemonResultProps = {
     pokemon?: Util.Pokemon,
@@ -80,10 +77,11 @@ declare module PropTypes {
   export type ISelectAnnotationProps = {
     annotations: Util.Annotation[],
     selectedAnnotation?: Util.Annotation,
-    setSelectedAnnotation: any,
+    setSelectedAnnotationName: any,
   }
   export type ISelectAnnotationTypeProps = {
-    selectedAnnotationType?: Util.OptionType,
-    setSelectedAnnotationType: any,
+    annotations: Util.Annotation[],
+    setAnnotations: any,
+    selectedAnnotation: Util.Annotation,
   }
 }

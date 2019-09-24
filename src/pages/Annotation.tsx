@@ -16,14 +16,13 @@ const Annotation:FC<PropTypes.IAnnotationProps> = () => {
   const [annotations, setAnnotations] = useState<Util.Annotation[]>([]);
   const [annotationCount, setAnnotationCount] = useState<number>(0);
 
-  const [selectedShapeName, setSelectedShapeName] = useState<string>('');
-  const [selectedAnnotation, setSelectedAnnotation] = useState<Util.Annotation | undefined>(undefined);
-  const [selectedAnnotationType, setSelectedAnnotationType] = useState<string>(ANNOTATION_TYPE_POKEMON);
-  const [selectedPokemon, setSelectedPokemon] = useState<Util.Pokemon | undefined>(undefined);
+  const [selectedAnnotationName, setSelectedAnnotationName] = useState<string>('');
 
   // NOTE: Force Update Function
   const [, updateState] = useState<{}>(); 
   const forceUpdate = useCallback(() => updateState({}), []);
+
+  const selectedAnnotation = annotations.find(annotation => annotation.name === selectedAnnotationName);
 
   if (loading) return <Loading loading={loading}/>
 
@@ -40,26 +39,18 @@ const Annotation:FC<PropTypes.IAnnotationProps> = () => {
           annotationCount={annotationCount}
           setAnnotationCount={setAnnotationCount}
 
-          setSelectedPokemon={setSelectedPokemon}
-          setSelectedAnnotation={setSelectedAnnotation}
-          setSelectedAnnotationType={setSelectedAnnotationType}
-
-          selectedShapeName={selectedShapeName}
-          setSelectedShapeName={setSelectedShapeName}
+          selectedAnnotationName={selectedAnnotationName}
+          setSelectedAnnotationName={setSelectedAnnotationName}
 
           forceUpdate={forceUpdate}
         />
         <RightBar
           annotations={annotations}
-
-          selectedAnnotation={selectedAnnotation}
-          setSelectedAnnotation={setSelectedAnnotation}
-
-          selectedAnnotationType={selectedAnnotationType}
-          setSelectedAnnotationType={setSelectedAnnotationType}
+          setAnnotations={setAnnotations}
           
-          selectedPokemon={selectedPokemon}
-          setSelectedPokemon={setSelectedPokemon}
+          selectedAnnotation={selectedAnnotation}
+
+          setSelectedAnnotationName={setSelectedAnnotationName}
         />
       </div>
     </div>

@@ -12,15 +12,11 @@ import SelectAnnotationType from './SelectAnnotationType';
 
 const RightBar:FC<PropTypes.IRightBarProps> = ({ 
   annotations,
+  setAnnotations,
 
-  selectedAnnotation, 
-  setSelectedAnnotation,
+  selectedAnnotation,
 
-  selectedAnnotationType,
-  setSelectedAnnotationType,
-
-  selectedPokemon,
-  setSelectedPokemon,
+  setSelectedAnnotationName,
 }: PropTypes.IRightBarProps) => {
 
   const [pokemonSearchString, setPokemonSearchString] = useState('');
@@ -34,9 +30,9 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
         </h3>
         <SelectAnnotation
           annotations={annotations}
-
+          setSelectedAnnotationName={setSelectedAnnotationName}
+          
           selectedAnnotation={selectedAnnotation}
-          setSelectedAnnotation={setSelectedAnnotation}
         />
       </div>
       {selectedAnnotation && (
@@ -45,12 +41,14 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
             Select Annotation Type
           </h3>
           <SelectAnnotationType
-            selectedAnnotationType={selectedAnnotationType}
-            setSelectedAnnotationType={setSelectedAnnotationType}
+            annotations={annotations}
+            setAnnotations={setAnnotations}
+            
+            selectedAnnotation={selectedAnnotation}
           />
         </div>
       )}
-      {annotations.length > 0 && selectedAnnotation && selectedAnnotationType && (
+      {annotations.length > 0 && selectedAnnotation && selectedAnnotation.type && (
         <div className='right_bar__section'>
           <h3 className='right_bar__section__title'>
             Select Pokemon
@@ -59,12 +57,14 @@ const RightBar:FC<PropTypes.IRightBarProps> = ({
             pokemonSearchString={pokemonSearchString}
             setPokemonSearchString={setPokemonSearchString}
 
-            selectedPokemon={selectedPokemon}
-            setSelectedPokemon={setSelectedPokemon}          
+            annotations={annotations}
+            setAnnotations={setAnnotations}
+            
+            selectedAnnotation={selectedAnnotation}
           />
         </div>
       )}
-      {annotations.length > 0 && selectedAnnotation && selectedAnnotationType && (
+      {annotations.length > 0 && selectedAnnotation && selectedAnnotation.type && (
         <div className='right_bar__section'>
           <button 
             className='right_bar__section--submit' 

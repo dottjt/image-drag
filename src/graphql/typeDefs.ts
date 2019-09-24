@@ -13,6 +13,7 @@ const typeDefs = `
     pokemon_id: String 
 
     name: String
+    type: String
     stroke: String
     key: String
     
@@ -27,6 +28,7 @@ const typeDefs = `
     pokemon: Pokemon
 
     name: String
+    type: String
     stroke: String
     key: String
     

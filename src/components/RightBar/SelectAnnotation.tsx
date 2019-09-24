@@ -8,8 +8,8 @@ import { generateOptionType } from '../../util/helper';
 
 const SelectAnnotation:FC<PropTypes.ISelectAnnotationProps> = ({ 
   annotations,
+  setSelectedAnnotationName,
   selectedAnnotation,
-  setSelectedAnnotation,
  }: PropTypes.ISelectAnnotationProps) => {
 
   const selectedAnnotationOption: Util.OptionType = 
@@ -24,10 +24,7 @@ const SelectAnnotation:FC<PropTypes.ISelectAnnotationProps> = ({
         value={selectedAnnotationOption}
         onChange={(selectedOption: ValueType<Util.OptionType>) => {
           const selectedOptionType = selectedOption as Util.OptionType;
-          if (selectedOption) {
-            const fullAnnotation = annotations.find(anno => anno.name === selectedOptionType.value);
-            setSelectedAnnotation(fullAnnotation);  
-          }
+          setSelectedAnnotationName(selectedOptionType.value);  
         }}
         options={annotationOptions}
       />

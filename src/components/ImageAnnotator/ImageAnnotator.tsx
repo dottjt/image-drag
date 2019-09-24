@@ -7,7 +7,7 @@ import useImage from 'use-image';
 import Rectangle from './Rectangle/Rectangle';
 import RectTransformer from './Rectangle/RectTransformer';
 
-import { ANNOTATION_TYPE_POKEMON } from '../../util/const';
+import { ANNOTATION_TYPE_POKEMON, annotationTypeReadable } from '../../util/const';
 import { generateOptionType } from '../../util/helper';
 
 const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
@@ -20,12 +20,8 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
   annotationCount,
   setAnnotationCount,
 
-  setSelectedPokemon,
-  setSelectedAnnotation,
-  setSelectedAnnotationType,
-
-  selectedShapeName,
-  setSelectedShapeName,
+  selectedAnnotationName,
+  setSelectedAnnotationName,
 
   forceUpdate,
 }: PropTypes.IImageAnnotatorProps) => {
@@ -58,7 +54,7 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
             setMouseDown,
             setNewRectX,
             setNewRectY,
-            setSelectedShapeName,
+            setSelectedAnnotationName,
           )}
           onMouseMove={(evt) => onMouseMove(
             evt,
@@ -73,9 +69,7 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
           )}
           onMouseUp={() => onMouseUp(
             annotations[annotationCount],
-            setSelectedPokemon,
-            setSelectedAnnotation,
-            setSelectedAnnotationType,
+            setSelectedAnnotationName,
 
             annotationCount,
             setAnnotationCount,
@@ -92,14 +86,14 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorProps> = ({
               <Rectangle
                 key={i}
                 annotation={annotation}
-                isSelected={annotation.name === selectedShapeName}
+                isSelected={annotation.name === selectedAnnotationName}
                 onTransform={(newProps: any) => handleRectChange(i, newProps, annotations, setAnnotations)}
-                onSelectAnnotation={() => setSelectedShapeName(annotation.name)}
+                onSelectAnnotation={() => setSelectedAnnotationName(annotation.name)}
                 tRef={tRef}
               />
             ))}
             <RectTransformer 
-              selectedShapeName={selectedShapeName} 
+              selectedAnnotationName={selectedAnnotationName} 
               tRef={tRef}
             />
           </Layer>
@@ -119,8 +113,9 @@ const onMouseDown = (
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>,
   setNewRectX: React.Dispatch<React.SetStateAction<number>>,
   setNewRectY: React.Dispatch<React.SetStateAction<number>>,
-  setSelectedShapeName: React.Dispatch<React.SetStateAction<string>>,
+  setSelectedAnnotationName: React.Dispatch<React.SetStateAction<string>>,
 ) => {
+  console.log('cake')
   if (evt.target.className === 'Image') {
     const stage = evt.target.getStage();
     if (stage) {
@@ -129,7 +124,7 @@ const onMouseDown = (
         setMouseDown(true);
         setNewRectX(mousePos.x);
         setNewRectY(mousePos.y);
-        setSelectedShapeName('');
+        setSelectedAnnotationName('');
       }
     }
   }
@@ -139,12 +134,11 @@ const onMouseDown = (
 
   // find clicked rect by its name
   const name = evt.target.name();
-  const rect = annotations.find((r: Util.Annotation): boolean => r.name === name);
-  if (rect) {
-    setSelectedShapeName(name);
-    setAnnotations(annotations);
+  const annotation = annotations.find((r: Util.Annotation): boolean => r.name === name);
+  if (annotation) {
+    setSelectedAnnotationName(name);
   } else {
-    setSelectedShapeName('');
+    setSelectedAnnotationName('');
   }
 };
 
@@ -185,6 +179,7 @@ const onMouseMove = (
           const uuid = uuidv4();
           annotations.push({
             pokemon: undefined,
+            type: ANNOTATION_TYPE_POKEMON,
             // x1y1: mousePos.x,
             // x1y2: mousePos.y,
             // x2y1: newRectX,
@@ -211,9 +206,7 @@ const onMouseMove = (
 
 const onMouseUp = (
   latestAnnotation: Util.Annotation,
-  setSelectedPokemon: any,
-  setSelectedAnnotation: any,
-  setSelectedAnnotationType: any,
+  setSelectedAnnotationName: React.Dispatch<React.SetStateAction<string>>,
 
   annotationCount: number, 
   setAnnotationCount: React.Dispatch<React.SetStateAction<number>>,
@@ -225,14 +218,11 @@ const onMouseUp = (
   setMouseDown: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   if (mouseDown) {
-    if (mouseDraw) {
-      setSelectedAnnotation(latestAnnotation);
-      setSelectedAnnotationType(generateOptionType(ANNOTATION_TYPE_POKEMON, ANNOTATION_TYPE_POKEMON));
-      setSelectedPokemon(undefined);
-
+    if (mouseDraw) {      
       setAnnotationCount(annotationCount + 1);
       setMouseDraw(false);
     }
+    setSelectedAnnotationName(latestAnnotation.name);
     setMouseDown(false);
   }
 };

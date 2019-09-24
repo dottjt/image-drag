@@ -7,8 +7,10 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
   pokemonSearchString,
   setPokemonSearchString,
 
-  selectedPokemon,
-  setSelectedPokemon,
+  annotations,
+  setAnnotations,
+  
+  selectedAnnotation,
 }: PropTypes.ISelectPokemonProps) => {
 
   const { data, loading } = useQuery(GET_POKEMON, {
@@ -24,10 +26,10 @@ const SelectPokemon:FC<PropTypes.ISelectPokemonProps> = ({
           setPokemonSearchString(event.target.value);
         }}
       />
-      {selectedPokemon &&
-        (!selectedPokemon.name.includes(pokemonSearchString) || pokemonSearchString === '') && (
+      {selectedAnnotation.pokemon &&
+        (!selectedAnnotation.pokemon.name.includes(pokemonSearchString) || pokemonSearchString === '') && (
           <SelectPokemonResult
-            pokemon={selectedPokemon}
+            pokemon={selectedAnnotation.pokemon}
             isSelectedPokemon
             setSelectedPokemon={() => null}
           />
