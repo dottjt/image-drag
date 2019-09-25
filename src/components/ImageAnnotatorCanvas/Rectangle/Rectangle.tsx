@@ -49,10 +49,12 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
           x={annotation.coordinates[0].x + rectWidth} // annotation.coordinates[0].x
           y={annotation.coordinates[0].y} // annotation.coordinates[0].y
 
-          fontSize={16} 
-          text={annotation.name} 
-          wrap="char" 
-          align="right" />
+          fontSize={16}
+          text={annotation.name}
+          wrap="char"
+          align="right"
+          ref={rectText}
+        />
       )}
 
       {isSelected && (

@@ -32,7 +32,7 @@ export const adjustCoordinates = (c: Util.Coordinate[]) => {
 
   // bottomRightTopLeft
   if (x0 > x1 && x3 > x2 && y1 < y2) {
-    return [c[1], c[0], c[3], c[2]];
+    return [c[1], c[0], c[3], c[2]] 
   }
 
   // bottomLeftTopRight

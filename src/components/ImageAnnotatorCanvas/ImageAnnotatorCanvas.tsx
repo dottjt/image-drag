@@ -182,13 +182,13 @@ const onMouseMove = (
       const mousePos = stage.getPointerPosition();
       if (mousePos) {
         const draggedDown = newRectY < mousePos.y;
-
+        console.log(draggedDown)
         const newY = draggedDown ? (
           newRectY - (mousePos.y - newRectY)
         ) : ( 
           mousePos.y
         )
-        // console.log(newRectY, mousePos.y)
+        console.log(newRectY, mousePos.y)
           
         const coordinates = [
           { x: newRectX, y: newRectY },
@@ -197,7 +197,10 @@ const onMouseMove = (
           { x: newRectX, y: newY }, // mousePos.y
         ];
         
+        console.log('coordinates', coordinates);
+
         const rearrangedCoordinates = adjustCoordinates(coordinates);
+        console.log('rearrangedCoordinates', rearrangedCoordinates);
 
         if (!annotations[annotationCount]) {
           const uuid = uuidv4();
