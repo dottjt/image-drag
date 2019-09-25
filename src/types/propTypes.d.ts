@@ -41,6 +41,7 @@ declare module PropTypes {
     newRectX: number,
     newRectY: number,
   }
+  export type IImageAnnotatorLoginProps = {}
   export type IAnnotationImageProps = {
     currentImage: Util.Image,
   }
@@ -49,7 +50,12 @@ declare module PropTypes {
     trRef: any,
   }
   export type IRectangleProps = {
+    annotations: Util.Annotation[],
+    setAnnotations: any,
+
+    selectedAnnotation?: Util.Annotation,
     annotation: Util.Annotation,
+
     isSelected: boolean,
     onTransform: any,
     onSelectAnnotation: any,
@@ -65,6 +71,7 @@ declare module PropTypes {
 
     setSelectedAnnotationName: any,
   }
+  export type IRightBarNavBarProps = {}
   export type ISearchPokemonProps = {
     pokemonSearchString: string,
     setPokemonSearchString: any,

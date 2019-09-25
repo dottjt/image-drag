@@ -3,6 +3,7 @@ const typeDefs = `
     id: ID!
     display_name: String!
     email: String!
+    avatar: String
     password: String!
     providers: [Provider]
     admin: Boolean
@@ -42,7 +43,7 @@ const typeDefs = `
     type: String
     stroke: String
     key: String
-    
+
     x: Int
     y: Int
     width: Int

@@ -4,8 +4,12 @@ import gql from 'graphql-tag';
 export const GET_CURRENT_USER = gql`{
   getCurrentUser {
     id
-    email
     display_name
+    email
+    # avatar
+    # password
+    # providers
+    # admin
   }
 }`;
 
@@ -18,7 +22,7 @@ export const GET_NEW_IMAGE = gql`
       height
       width
       # annotations
-      # annotationCategories  
+      # annotationCategories
     }
   }
 `;

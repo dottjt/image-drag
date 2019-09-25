@@ -85,7 +85,12 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
             {annotations.map((annotation: Util.Annotation, i: number) => (
               <React.Fragment key={i}>
                 <Rectangle
+                  annotations={annotations}
+                  setAnnotations={setAnnotations}
+
                   annotation={annotation}
+                  selectedAnnotation={selectedAnnotation}
+
                   isSelected={annotation.name === selectedAnnotationName}
                   onTransform={(newProps: any) => handleRectChange(i, newProps, annotations, setAnnotations)}
                   onSelectAnnotation={() => setSelectedAnnotationName(annotation.name)}

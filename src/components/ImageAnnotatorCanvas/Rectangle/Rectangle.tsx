@@ -1,16 +1,22 @@
 import React, { FC, useRef, useEffect } from 'react';
 import Konva from 'konva';
-import { Group, Rect, Text } from 'react-konva';
+import { Group, Rect, Text, Circle } from 'react-konva';
 
 
 const Rectangle: FC<PropTypes.IRectangleProps> = ({
+  annotations,
+  setAnnotations,
+
   annotation,
+  selectedAnnotation,
+
   isSelected,
   onTransform,
   onSelectAnnotation,
   trRef,
 }: any) => {
   const rect: any = useRef();
+  const removeAnnotationCircle: any = useRef();
 
   useEffect(() => {
     if (isSelected) {
@@ -21,21 +27,48 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
 
   return (
     <Group>
-      {/* {isSelected && (
-        <Text fontSize={60} text="`HEYYYYYYYYYYYYYYYYYYYYYYY`"
-        wrap="char" align="center" />
-      )} */}
+
+      {isSelected && (
+        <Text fontSize={60} text={annotation.name} wrap="char" align="left" />
+      )}
+
+      {isSelected && (
+        <Circle
+          x={20}
+          y={20}
+          radius={70}
+          stroke={'black'}
+          strokeWidth={1}
+          onMouseEnter={() => {
+            removeAnnotationCircle.current.getStage().container().style.cursor = 'pointer';
+          }}
+          onClick={() => {
+            const removedAnnotations = annotations.filter(
+              (annotation: Util.Annotation) => annotation.name !== selectedAnnotation.name
+            );
+            setAnnotations(removedAnnotations);
+          }}
+          ref={removeAnnotationCircle}
+        />
+      )}
+
       <Rect
         x={annotation.x}
         y={annotation.y}
         width={annotation.width}
         height={annotation.height}
 
+        // NOTE: TODO, so you can't put it outside of the image.
+        // dragBoundFunc={(pos) => {
+
+        // }}
+
         // force no scaling
         // otherwise Transformer will change it
         scaleX={1}
         scaleY={1}
-        stroke={isSelected ? '#3DF6FF' : '#00A3AA'} // annotation.stroke
+        // stroke={isSelected ? '#3DF6FF' : '#00A3AA'} // annotation.stroke
+        fill={isSelected ? '#3DF6FF' : '#00A3AA'}
         strokeWidth={5}
         name={annotation.name}
 
@@ -56,10 +89,6 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
 
 const handleChange = (evt: Konva.KonvaEventObject<DragEvent | Event>, onTransform: any) => {
   const shape = evt.target;
-  // take a look into width and height properties
-  // by default Transformer will change scaleX and scaleY
-  // while transforming
-  // so we need to adjust that properties to width and height
   onTransform({
     x: shape.x(),
     y: shape.y(),

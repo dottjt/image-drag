@@ -1,7 +1,9 @@
 import React, { FC, useCallback, useState } from 'react';
 
+import ImageAnnotatorLogin from '../components/ImageAnnotatorCanvas/ImageAnnotatorLogin';
 import ImageAnnotatorCanvas from '../components/ImageAnnotatorCanvas/ImageAnnotatorCanvas';
 import Loading from '../components/Loading';
+import NavBar from '../components/NavBar';
 import RightBar from '../components/RightBar/RightBar';
 
 import { useQuery } from '@apollo/react-hooks';
@@ -24,36 +26,40 @@ const ImageAnnotator:FC<PropTypes.IImageAnnotatorProps> = ({
 
   const selectedAnnotation = annotations.find(annotation => annotation.name === selectedAnnotationName);
 
-  console.log(data);
-
   return (
     <div className='layout'>
       <div className='layout__annotation'>
         <div className='layout__annotation__left'>
+          <NavBar/>
           {loading ? (
             <Loading loading={loading}/>
           ) : (
-            <ImageAnnotatorCanvas
-              currentImage={data.getNewImage}
-              selectedAnnotation={selectedAnnotation}
+            // NOTE: Will need to be replaced with the user object.
+            true ? (
+              <ImageAnnotatorCanvas
+                currentImage={data.getNewImage}
+                selectedAnnotation={selectedAnnotation}
 
-              annotations={annotations}
-              setAnnotations={setAnnotations}
+                annotations={annotations}
+                setAnnotations={setAnnotations}
 
-              annotationCount={annotationCount}
-              setAnnotationCount={setAnnotationCount}
+                annotationCount={annotationCount}
+                setAnnotationCount={setAnnotationCount}
 
-              selectedAnnotationName={selectedAnnotationName}
-              setSelectedAnnotationName={setSelectedAnnotationName}
+                selectedAnnotationName={selectedAnnotationName}
+                setSelectedAnnotationName={setSelectedAnnotationName}
 
-              forceUpdate={forceUpdate}
-            />  
+                forceUpdate={forceUpdate}
+              />
+            ) : (
+              <ImageAnnotatorLogin/>
+            )
           )}
         </div>
         <RightBar
           annotations={annotations}
           setAnnotations={setAnnotations}
-          
+
           selectedAnnotation={selectedAnnotation}
 
           setSelectedAnnotationName={setSelectedAnnotationName}
