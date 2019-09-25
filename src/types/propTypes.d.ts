@@ -53,6 +53,10 @@ declare module PropTypes {
     annotations: Util.Annotation[],
     setAnnotations: any,
 
+    annotationCount: number,
+    setAnnotationCount: any,  
+
+    setSelectedAnnotationName: string,
     selectedAnnotation?: Util.Annotation,
     annotation: Util.Annotation,
 

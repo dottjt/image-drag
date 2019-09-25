@@ -19,8 +19,8 @@ declare namespace Util {
     type: string;
     height: number;
     width: number;
-    annotations: [Annotation]
-    annotationCategories: [string]
+    annotations: Annotation[];
+    annotationCategories: string[];
   }
 
   export type Annotation = {
@@ -32,15 +32,12 @@ declare namespace Util {
     stroke: string;
     key: string;
 
+    coordinates: Coordinate[];
+  }
+
+  export type Coordinate = {
     x: number;
     y: number;
-    width: number;
-    height: number;
-    
-    // x1y1: number;
-    // x1y2: number;
-    // x2y1: number;
-    // x2y2: number;
   }
 
   export type Human = {

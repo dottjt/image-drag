@@ -2,20 +2,27 @@ import React, { FC, useRef, useEffect } from 'react';
 import Konva from 'konva';
 import { Group, Rect, Text, Circle } from 'react-konva';
 
+import RectTransformer from '../Rectangle/RectTransformer';
 
 const Rectangle: FC<PropTypes.IRectangleProps> = ({
   annotations,
   setAnnotations,
+  
+  annotationCount,
+  setAnnotationCount,
 
   annotation,
   selectedAnnotation,
+  setSelectedAnnotationName,
 
   isSelected,
   onTransform,
   onSelectAnnotation,
   trRef,
 }: any) => {
+  const group: any = useRef();
   const rect: any = useRef();
+  const rectText: any = useRef();
   const removeAnnotationCircle: any = useRef();
 
   useEffect(() => {
@@ -25,17 +32,33 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
     }
   }, [isSelected]);
 
-  return (
-    <Group>
+  const rectWidth = annotation.coordinates[1].x - annotation.coordinates[0].x;
+  const rectHeight = annotation.coordinates[0].y - annotation.coordinates[2].y;
 
+  return (
+    <Group
+      onDragEnd={(evt) => handleChange(evt, onTransform)}
+      onTransformEnd={(evt) => handleChange(evt, onTransform)}
+      onMouseEnter={(evt) => handleMouseEnter(evt, group)}
+      onMouseLeave={(evt) => handleMouseLeave(evt, group)}
+      ref={group}
+      draggable
+    >
       {isSelected && (
-        <Text fontSize={60} text={annotation.name} wrap="char" align="left" />
+        <Text
+          x={annotation.coordinates[0].x + rectWidth} // annotation.coordinates[0].x
+          y={annotation.coordinates[0].y} // annotation.coordinates[0].y
+
+          fontSize={16} 
+          text={annotation.name} 
+          wrap="char" 
+          align="right" />
       )}
 
       {isSelected && (
         <Circle
-          x={20}
-          y={20}
+          x={annotation.coordinates[0].x + rectWidth + 0} // annotation.coordinates[0].x
+          y={annotation.coordinates[0].y} // annotation.coordinates[0].y
           radius={70}
           stroke={'black'}
           strokeWidth={1}
@@ -45,7 +68,11 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
           onClick={() => {
             const removedAnnotations = annotations.filter(
               (annotation: Util.Annotation) => annotation.name !== selectedAnnotation.name
+            ).map(
+              (annotation: Util.Annotation, index: number) => ({ ...annotation, name: `Annotation ${index + 1}`})
             );
+            
+            setAnnotationCount(annotationCount - 1);
             setAnnotations(removedAnnotations);
           }}
           ref={removeAnnotationCircle}
@@ -53,42 +80,42 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
       )}
 
       <Rect
-        x={annotation.x}
-        y={annotation.y}
-        width={annotation.width}
-        height={annotation.height}
+        name={annotation.name}
 
+        x={annotation.coordinates[0].x} // annotation.coordinates[0].x  
+        y={annotation.coordinates[0].y} // annotation.coordinates[0].y
+        width={rectWidth} // annotation.coordinates[1].x - annotation.coordinates[0].x
+        height={rectHeight} // annotation.coordinates[0].y - annotation.coordinates[2].y 
+
+        scaleX={1}
+        scaleY={1}
+        fill={isSelected ? '#3DF6FF' : '#00A3AA'}
+        strokeWidth={5}
+        opacity={0.3}
+
+        onClick={onSelectAnnotation}
         // NOTE: TODO, so you can't put it outside of the image.
         // dragBoundFunc={(pos) => {
 
-        // }}
-
-        // force no scaling
-        // otherwise Transformer will change it
-        scaleX={1}
-        scaleY={1}
-        // stroke={isSelected ? '#3DF6FF' : '#00A3AA'} // annotation.stroke
-        fill={isSelected ? '#3DF6FF' : '#00A3AA'}
-        strokeWidth={5}
-        name={annotation.name}
-
-        // save state on dragend or transformend
-        onDragEnd={(evt) => handleChange(evt, onTransform)}
-        onTransformEnd={(evt) => handleChange(evt, onTransform)}
-        onMouseEnter={(evt) => handleMouseEnter(evt, rect)}
-        onMouseLeave={(evt) => handleMouseLeave(evt, rect)}
-
-        onClick={onSelectAnnotation}
-        draggable
-
         ref={rect}
       />
+      {isSelected && (
+        <RectTransformer
+          selectedAnnotationName={setSelectedAnnotationName}
+          trRef={trRef}
+        />
+      )}
+        {/* <Transformer ref={trRef}/> */}
+
     </Group>
   );
 }
 
 const handleChange = (evt: Konva.KonvaEventObject<DragEvent | Event>, onTransform: any) => {
   const shape = evt.target;
+
+  // NOTE: I also need to set the annotation values.
+
   onTransform({
     x: shape.x(),
     y: shape.y(),
@@ -98,18 +125,15 @@ const handleChange = (evt: Konva.KonvaEventObject<DragEvent | Event>, onTransfor
   });
 };
 
-// if use rect.draw(), the new rectangle will cover its transformer
 const handleMouseEnter = (event: Konva.KonvaEventObject<MouseEvent>, rect: any) => {
   // rect.current.stroke('#3DF6FF');
   rect.current.getStage().container().style.cursor = 'move';
-  // rect.draw();
   rect.current.getLayer().draw();
 };
 
 const handleMouseLeave = (event: Konva.KonvaEventObject<MouseEvent>, rect: any) => {
   // rect.current.stroke('#00A3AA');
   rect.current.getStage().container().style.cursor = 'crosshair';
-  // rect.draw();
   rect.current.getLayer().draw();
 };
 

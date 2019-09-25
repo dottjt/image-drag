@@ -30,7 +30,6 @@ const ImageAnnotator:FC<PropTypes.IImageAnnotatorProps> = ({
     <div className='layout'>
       <div className='layout__annotation'>
         <div className='layout__annotation__left'>
-          <NavBar/>
           {loading ? (
             <Loading loading={loading}/>
           ) : (
@@ -65,6 +64,8 @@ const ImageAnnotator:FC<PropTypes.IImageAnnotatorProps> = ({
           setSelectedAnnotationName={setSelectedAnnotationName}
         />
       </div>
+      <NavBar/>
+
     </div>
   )
 };
