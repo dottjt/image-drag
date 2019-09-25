@@ -181,12 +181,19 @@ const onMouseMove = (
     if (stage) {
       const mousePos = stage.getPointerPosition();
       if (mousePos) {
-        const newY = newRectY - (mousePos.y - newRectY) 
+        const draggedDown = newRectY < mousePos.y;
 
+        const newY = draggedDown ? (
+          newRectY - (mousePos.y - newRectY)
+        ) : ( 
+          mousePos.y
+        )
+        // console.log(newRectY, mousePos.y)
+          
         const coordinates = [
           { x: newRectX, y: newRectY },
           { x: mousePos.x, y: newRectY },
-          { x: mousePos.x, y: newY}, // mousePos.y
+          { x: mousePos.x, y: newY }, // mousePos.y
           { x: newRectX, y: newY }, // mousePos.y
         ];
         
@@ -249,6 +256,7 @@ const onMouseUp = (
       setMouseDraw(false);
     }
     setMouseDown(false);
+    console.log(latestAnnotation.coordinates);
   }
 };
 

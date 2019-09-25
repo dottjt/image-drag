@@ -59,7 +59,7 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
         <Circle
           x={annotation.coordinates[0].x + rectWidth + 0} // annotation.coordinates[0].x
           y={annotation.coordinates[0].y} // annotation.coordinates[0].y
-          radius={70}
+          radius={20}
           stroke={'black'}
           strokeWidth={1}
           onMouseEnter={() => {
