@@ -32,9 +32,12 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
   const [mouseDraw, setMouseDraw] = useState<boolean>(false);
   const [newRectX, setNewRectX] = useState<number>(0);
   const [newRectY, setNewRectY] = useState<number>(0);
+  const [draggedDown, setDraggedDown] = useState<boolean>(true);
 
   useEffect(() => {
-    img.current.moveToBottom();
+    if (img.current) {
+      img.current.moveToBottom();
+    }
   });
 
   return (
@@ -59,6 +62,7 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
             annotations,
             setAnnotations,
             annotationCount,
+            setDraggedDown,
             newRectX,
             newRectY,
             mouseDown,
@@ -92,6 +96,8 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
 
                 annotationCount={annotationCount}
                 setAnnotationCount={setAnnotationCount}
+
+                draggedDown={draggedDown}
 
                 annotation={annotation}
                 selectedAnnotation={selectedAnnotation}
@@ -130,22 +136,17 @@ const onMouseDown = (
         setMouseDown(true);
         setNewRectX(mousePos.x);
         setNewRectY(mousePos.y);
-        // setSelectedAnnotationName('');
       }
     }
   }
+  const parent = evt.target.getParent();
+  if (parent && parent.className === 'Transformer') return;
 
-  // clicked on transformer - do nothing
-  if (evt.target.getParent().className === 'Transformer') return;
-
-  // find clicked rect by its name
   const name = evt.target.name();
   const annotation = annotations.find((r: Util.Annotation): boolean => r.name === name);
   if (annotation) {
     setSelectedAnnotationName(name);
-  } /* else {
-    setSelectedAnnotationName('');
-  } */
+  }
 };
 
 const handleRectChange = (
@@ -168,6 +169,8 @@ const onMouseMove = (
   setAnnotations: React.Dispatch<React.SetStateAction<Util.Annotation[]>>,
   annotationCount: number,
 
+  setDraggedDown: React.Dispatch<React.SetStateAction<boolean>>,
+
   newRectX: number,
   newRectY: number,
   mouseDown: boolean,
@@ -182,6 +185,8 @@ const onMouseMove = (
       const mousePos = stage.getPointerPosition();
       if (mousePos) {
         const draggedDown = newRectY < mousePos.y;
+
+        setDraggedDown(draggedDown);
         console.log(draggedDown)
         const newY = draggedDown ? (
           newRectY - (mousePos.y - newRectY)
@@ -259,7 +264,6 @@ const onMouseUp = (
       setMouseDraw(false);
     }
     setMouseDown(false);
-    console.log(latestAnnotation.coordinates);
   }
 };
 

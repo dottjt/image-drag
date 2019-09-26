@@ -10,7 +10,10 @@ body {
 }
 
 .layout {
-  // padding: 0.5rem;
+}
+
+.layout__page {
+  padding: 0.5rem;
 }
 
 .layout__navbar {
@@ -49,8 +52,8 @@ body {
 }
 
 @media screen and (min-width: 768px) {
-  .layout {
-    // padding: 4rem;
+  .layout__page {
+    padding: 4rem;
   }
   .payslip__top {
     flex-direction: row;

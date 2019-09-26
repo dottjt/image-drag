@@ -6,7 +6,7 @@ const About:FC<PropTypes.IAboutProps> = () => {
   // const { data, loading } = useQuery(GET_NEW_IMAGE);
 
   return (
-    <div className='layout'>
+    <div className='layout__page'>
       <h1>About</h1>
 
       <h2>What is PokeML?</h2>

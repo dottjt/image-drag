@@ -54,7 +54,9 @@ declare module PropTypes {
     setAnnotations: any,
 
     annotationCount: number,
-    setAnnotationCount: any,  
+    setAnnotationCount: any, 
+    
+    draggedDown: boolean,
 
     setSelectedAnnotationName: string,
     selectedAnnotation?: Util.Annotation,

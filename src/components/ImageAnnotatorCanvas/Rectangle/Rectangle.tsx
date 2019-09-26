@@ -11,6 +11,8 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
   annotationCount,
   setAnnotationCount,
 
+  draggedDown,
+
   annotation,
   selectedAnnotation,
   setSelectedAnnotationName,
@@ -33,8 +35,12 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
   }, [isSelected]);
 
   const rectWidth = annotation.coordinates[1].x - annotation.coordinates[0].x;
-  const rectHeight = annotation.coordinates[0].y - annotation.coordinates[2].y;
+  const rectHeight = annotation.coordinates[0].y - annotation.coordinates[2].y
 
+
+  if (group.current && rect.current && rectText.current && removeAnnotationCircle.current) {
+    
+  }
   return (
     <Group
       onDragEnd={(evt) => handleChange(evt, onTransform)}
@@ -44,10 +50,13 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
       ref={group}
       draggable
     >
+      {/* {group.current && rect.current && rectText.current && removeAnnotationCircle.current && (
+        
+      )} */}
       {isSelected && (
         <Text
-          x={annotation.coordinates[0].x + rectWidth} // annotation.coordinates[0].x
-          y={annotation.coordinates[0].y} // annotation.coordinates[0].y
+          x={annotation.coordinates[0].x} // annotation.coordinates[0].x
+          y={annotation.coordinates[0].y - 16} // annotation.coordinates[0].y
 
           fontSize={16}
           text={annotation.name}
@@ -59,7 +68,7 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
 
       {isSelected && (
         <Circle
-          x={annotation.coordinates[0].x + rectWidth + 0} // annotation.coordinates[0].x
+          x={annotation.coordinates[0].x + rectWidth} // annotation.coordinates[0].x
           y={annotation.coordinates[0].y} // annotation.coordinates[0].y
           radius={20}
           stroke={'black'}
