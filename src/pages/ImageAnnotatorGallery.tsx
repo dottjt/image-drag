@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 
 import ImageAnnotator from '../components/ImageAnnotatorCanvas/ImageAnnotatorCanvas';
 import RightBar from '../components/RightBar/RightBar';
+import NavBar from '../components/NavBar';
 
 import { useQuery } from '@apollo/react-hooks';
 
@@ -12,6 +13,10 @@ const ImageAnnotatorGallery:FC<PropTypes.IImageAnnotatorGalleryProps> = () => {
 
   return (
     <div className='layout'>
+      <NavBar/>
+      <div>
+
+      </div>
       
     </div>
   )

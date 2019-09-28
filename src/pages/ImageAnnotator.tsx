@@ -28,44 +28,45 @@ const ImageAnnotator:FC<PropTypes.IImageAnnotatorProps> = ({
 
   return (
     <div className='layout'>
-      <div className='layout__annotation'>
-        <div className='layout__annotation__left'>
-          {loading ? (
-            <Loading loading={loading}/>
-          ) : (
-            // NOTE: Will need to be replaced with the user object.
-            true ? (
-              <ImageAnnotatorCanvas
-                currentImage={data.getNewImage}
-                selectedAnnotation={selectedAnnotation}
-
-                annotations={annotations}
-                setAnnotations={setAnnotations}
-
-                annotationCount={annotationCount}
-                setAnnotationCount={setAnnotationCount}
-
-                selectedAnnotationName={selectedAnnotationName}
-                setSelectedAnnotationName={setSelectedAnnotationName}
-
-                forceUpdate={forceUpdate}
-              />
-            ) : (
-              <ImageAnnotatorLogin/>
-            )
-          )}
-        </div>
-        <RightBar
-          annotations={annotations}
-          setAnnotations={setAnnotations}
-
-          selectedAnnotation={selectedAnnotation}
-
-          setSelectedAnnotationName={setSelectedAnnotationName}
-        />
-      </div>
       <NavBar/>
+      <div className='layout__page'>
+        <div className='layout__annotation'>
+          <div className='layout__annotation__left'>
+            {loading ? (
+              <Loading loading={loading}/>
+            ) : (
+              // NOTE: Will need to be replaced with the user object.
+              true ? (
+                <ImageAnnotatorCanvas
+                  currentImage={data.getNewImage}
+                  selectedAnnotation={selectedAnnotation}
 
+                  annotations={annotations}
+                  setAnnotations={setAnnotations}
+
+                  annotationCount={annotationCount}
+                  setAnnotationCount={setAnnotationCount}
+
+                  selectedAnnotationName={selectedAnnotationName}
+                  setSelectedAnnotationName={setSelectedAnnotationName}
+
+                  forceUpdate={forceUpdate}
+                />
+              ) : (
+                <ImageAnnotatorLogin/>
+              )
+            )}
+          </div>
+          <RightBar
+            annotations={annotations}
+            setAnnotations={setAnnotations}
+
+            selectedAnnotation={selectedAnnotation}
+
+            setSelectedAnnotationName={setSelectedAnnotationName}
+          />
+        </div>
+      </div>
     </div>
   )
 };

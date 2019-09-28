@@ -27,6 +27,30 @@ export const GET_NEW_IMAGE = gql`
   }
 `;
 
+export const GET_GALLERY_SEARCH = gql`
+  query GetGallerySearch($searchText: String) {
+    # doesPokemonExist(searchText: $searchText)
+
+    getGallerySearch(searchText: $searchText) {
+      id
+      url
+      type
+      height
+      width
+      annotations {
+        pokemon {
+          name 
+        }
+        coordinates {
+          x
+          y
+        }
+      }
+      # annotationCategories
+    }
+  }
+`;
+
 export const GET_POKEMON = gql`
   query GetPokemon($pokemonName: String) {
     getPokemon(pokemonName: $pokemonName) {

@@ -1,0 +1,28 @@
+// HOMEPAGE
+.homepage__title {
+  font-size: 4rem;
+}
+
+// HOMEPAGE SEARCH
+.homepage__search__box {
+  display : flex;
+
+  height: 60px;
+  width: 100%;
+}
+.homepage__search__box__input {
+  border: none;
+  font-size: 1.4rem;
+  padding-left: 1rem;
+  border: 1px solid lightgray;
+  width: 80%;
+}
+.homepage__search__results {
+
+}
+.homepage__search__result {
+  position: relative;
+}
+.homepage__section {
+
+}
