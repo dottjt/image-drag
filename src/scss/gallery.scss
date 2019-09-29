@@ -1,0 +1,27 @@
+// GALLERY SEARCH
+.gallery__search {
+  
+}
+.gallery__search__box {
+  display : flex;
+
+  height: 60px;
+  width: 100%;
+}
+.gallery__search__box__input {
+  border: none;
+  font-size: 1.4rem;
+  padding-left: 1rem;
+  border: 1px solid lightgray;
+  width: 80%;
+}
+.gallery__search__filter {
+  display: flex;
+  justify-content: flex-start;
+}
+.gallery__search__results {
+
+}
+.gallery__search__result {
+  position: relative;
+}

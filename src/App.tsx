@@ -7,7 +7,7 @@ import { GET_CURRENT_USER } from './graphql/queries';
 import Home from './pages/Home';
 import About from './pages/About';
 import ImageAnnotator from './pages/ImageAnnotator';
-import ImageAnnotatorGallery from './pages/ImageAnnotatorGallery';
+import Gallery from './pages/Gallery';
 
 import Loading from './components/Loading';
 
@@ -42,7 +42,7 @@ const App:FC<PropTypes.IAppProps> = ({ client, route }: any) => {
     }
     case ROUTE_TITLE.IMAGE_ANNOTATOR_GALLERY: {
       return (
-        <ImageAnnotatorGallery/>
+        <Gallery/>
       );
     }
     default:

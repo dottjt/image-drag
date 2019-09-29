@@ -17,7 +17,11 @@ declare module PropTypes {
   }
 
   // GALLERY
-  export type IImageAnnotatorGalleryProps = {}
+  export type IGalleryProps = {}
+  export type IGalleryImageSearchProps = {}
+  export type IGalleryImageProps = {
+    image: Util.Image,
+  }
 
   // IMAGE ANNOTATOR
   export type IImageAnnotatorCanvasProps = {

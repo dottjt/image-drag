@@ -21,6 +21,30 @@ export const generateInputAnnotations = (annotations: Util.Annotation[]) => (
   })
 );
 
+export const calculateRectWidth = (c: Util.Coordinate[]): number => {
+  if (c[0].x > c[1].x) {
+    return c[0].x - c[1].x;
+  } return c[1].x - c[0].x;
+}
+
+export const calculateRectHeight = (c: Util.Coordinate[]): number => {
+  if (c[1].y > c[2].y) {
+    return c[1].y - c[2].y;
+  } return c[2].y - c[1].y;
+}
+
+export const calculateRectTopRight = (c: Util.Coordinate[]) => (
+  c.reduce((acc: { xHighest: number, yHighest: number }, coord: Util.Coordinate) => {
+    if (coord.x > acc.xHighest) {
+      return { ...acc, xHighest: coord.x };
+    }
+    if (coord.y > acc.yHighest) {
+      return { ...acc, yHighest: coord.y};
+    }
+    return acc;
+  }, { xHighest: 0, yHighest: 0 })
+);
+
 export const adjustCoordinates = (c: Util.Coordinate[]) => {
   const x0 = c[0].x;
   const x1 = c[1].x;

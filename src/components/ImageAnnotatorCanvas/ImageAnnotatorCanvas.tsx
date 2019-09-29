@@ -62,7 +62,6 @@ const ImageAnnotator: FC<PropTypes.IImageAnnotatorCanvasProps> = ({
             annotations,
             setAnnotations,
             annotationCount,
-            setDraggedDown,
             newRectX,
             newRectY,
             mouseDown,
@@ -169,8 +168,6 @@ const onMouseMove = (
   setAnnotations: React.Dispatch<React.SetStateAction<Util.Annotation[]>>,
   annotationCount: number,
 
-  setDraggedDown: React.Dispatch<React.SetStateAction<boolean>>,
-
   newRectX: number,
   newRectY: number,
   mouseDown: boolean,
@@ -184,16 +181,7 @@ const onMouseMove = (
     if (stage) {
       const mousePos = stage.getPointerPosition();
       if (mousePos) {
-        const draggedDown = newRectY < mousePos.y;
-
-        setDraggedDown(draggedDown);
-        console.log(draggedDown)
-        const newY = draggedDown ? (
-          newRectY - (mousePos.y - newRectY)
-        ) : ( 
-          mousePos.y
-        )
-        console.log(newRectY, mousePos.y)
+        const newY = newRectY - (mousePos.y - newRectY)
           
         const coordinates = [
           { x: newRectX, y: newRectY },
@@ -202,18 +190,13 @@ const onMouseMove = (
           { x: newRectX, y: newY }, // mousePos.y
         ];
         
-        console.log('coordinates', coordinates);
-
-        const rearrangedCoordinates = adjustCoordinates(coordinates);
-        console.log('rearrangedCoordinates', rearrangedCoordinates);
-
         if (!annotations[annotationCount]) {
           const uuid = uuidv4();
           annotations.push({
             pokemon: undefined,
             human: undefined,
             type: ANNOTATION_TYPE_POKEMON,
-            coordinates: rearrangedCoordinates,
+            coordinates,
             // x: newRectX,
             // y: newRectY,
             // width: mousePos.x - newRectX,
@@ -224,7 +207,7 @@ const onMouseMove = (
           });
         }
 
-        annotations[annotationCount].coordinates = rearrangedCoordinates;
+        annotations[annotationCount].coordinates = coordinates;
         
         // annotations[annotationCount].width = mousePos.x - newRectX;
         // annotations[annotationCount].height = mousePos.y - newRectY;
@@ -256,7 +239,7 @@ const onMouseUp = (
   if (mouseDown) {
     if (mouseDraw) {
       setSelectedAnnotationName(latestAnnotation.name);
-
+      
       setAnnotationCount(annotationCount + 1);
       setMouseDraw(false);
     } else {

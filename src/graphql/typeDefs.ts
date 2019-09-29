@@ -74,6 +74,11 @@ const typeDefs = `
     name: String
     sprite: String
   }
+
+  // Gallery
+  input FilterQuery {
+    sort: String
+  }
 `;
 
 export default typeDefs;

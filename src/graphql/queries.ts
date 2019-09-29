@@ -28,7 +28,7 @@ export const GET_NEW_IMAGE = gql`
 `;
 
 export const GET_GALLERY_SEARCH = gql`
-  query GetGallerySearch($searchText: String) {
+  query GetGallerySearch($searchText: String, $filterQuery: FilterQuery) {
     # doesPokemonExist(searchText: $searchText)
 
     getGallerySearch(searchText: $searchText) {

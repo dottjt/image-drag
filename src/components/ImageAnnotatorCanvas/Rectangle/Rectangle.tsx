@@ -4,6 +4,12 @@ import { Group, Rect, Text, Circle } from 'react-konva';
 
 import RectTransformer from '../Rectangle/RectTransformer';
 
+import { 
+  calculateRectWidth,
+  calculateRectHeight,
+  calculateRectTopRight 
+} from '../../../util/helper';
+
 const Rectangle: FC<PropTypes.IRectangleProps> = ({
   annotations,
   setAnnotations,
@@ -34,13 +40,18 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
     }
   }, [isSelected]);
 
+  // So the problem is that 
   const rectWidth = annotation.coordinates[1].x - annotation.coordinates[0].x;
   const rectHeight = annotation.coordinates[0].y - annotation.coordinates[2].y
 
+  // const rectWidth =  calculateRectWidth(annotation.coordinates);
+  // const rectHeight =  calculateRectHeight(annotation.coordinates);
 
-  if (group.current && rect.current && rectText.current && removeAnnotationCircle.current) {
-    
-  }
+  const circleXY = calculateRectTopRight(annotation.coordinates);
+
+// console.log(rectWidth)
+// console.log(rectWidth)
+
   return (
     <Group
       onDragEnd={(evt) => handleChange(evt, onTransform)}
@@ -50,9 +61,6 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
       ref={group}
       draggable
     >
-      {/* {group.current && rect.current && rectText.current && removeAnnotationCircle.current && (
-        
-      )} */}
       {isSelected && (
         <Text
           x={annotation.coordinates[0].x} // annotation.coordinates[0].x
@@ -68,8 +76,8 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
 
       {isSelected && (
         <Circle
-          x={annotation.coordinates[0].x + rectWidth} // annotation.coordinates[0].x
-          y={annotation.coordinates[0].y} // annotation.coordinates[0].y
+          x={circleXY.xHighest}
+          y={circleXY.yHighest}
           radius={20}
           stroke={'black'}
           strokeWidth={1}
@@ -82,6 +90,8 @@ const Rectangle: FC<PropTypes.IRectangleProps> = ({
             ).map(
               (annotation: Util.Annotation, index: number) => ({ ...annotation, name: `Annotation ${index + 1}`})
             );
+
+            setSelectedAnnotationName(removedAnnotations.length > 0 ? removedAnnotations[removedAnnotations.length - 1].name : '');
             
             setAnnotationCount(annotationCount - 1);
             setAnnotations(removedAnnotations);

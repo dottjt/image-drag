@@ -57,5 +57,9 @@ declare namespace Util {
   export type OptionType = { 
     label: string; 
     value: string;
-  };
+  }
+
+  export type FilterQuery = { 
+    sort: string; 
+  }
 }
