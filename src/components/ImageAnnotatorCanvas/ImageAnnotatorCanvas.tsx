@@ -175,11 +175,13 @@ const onMouseMove = (
   forceUpdate: any,
 ): void => {
 
-  // So the issue is that within mouseDown, it will automatically
   if (mouseDown) {
     const stage = event.target.getStage();
     if (stage) {
       const mousePos = stage.getPointerPosition();
+      // NOTE: For the ACTUAL coordinates, I will need to get the mouse position relative to the top left corner (which I would assume is a different proprety/field that I would have to call)
+      // OR I could also use the newRectX position to calculate the final coordinates relative to the  
+
       if (mousePos) {
         const newY = newRectY - (mousePos.y - newRectY)
           
