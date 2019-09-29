@@ -18,8 +18,6 @@ const GalleryImageSearch:FC<PropTypes.IGalleryImageSearchProps> = ({}) => {
     variables: { searchText, filterQuery },
   });
 
-  console.log('GET_GALLERY_SEARCH', data);
-
   return (
     <div className='gallery__search'>
       <div className='gallery__search__box'>
@@ -32,35 +30,29 @@ const GalleryImageSearch:FC<PropTypes.IGalleryImageSearchProps> = ({}) => {
         />
       </div>
 
-    {/* NOTE: I need to figure this out. */}
+      {/* NOTE: I need to figure this out. */}
       <div className='gallery__search__filter'>
         <Select
           value={{value: filterQuery.sort, label: filterQuery.sort }}
           onChange={(selectedOption: ValueType<Util.OptionType>) => {
             const selectedOptionType = selectedOption as Util.OptionType;
-            setFilterQuery({
-              ...filterQuery,
-              // sort: ,
-            });  
+            setFilterQuery({ ...filterQuery, sort: selectedOptionType.value });  
           }}
           options={[{value: 'desc', label: 'desc'}, {value: 'asc', label: 'asc'}]}
         />
       </div>
 
       <div className='gallery__search__results'>
-        {/* It should also let the user know if what they've searched is not a pokemon. */}
-
         {loading && <Loading loading={loading} />}
-
         {!loading && searchText && data.getGallerySearch.length === 0 && (
           <div>
             Sorry, there are no annotated.
           </div>
         )}
-
-        {!loading && searchText && data.getGallerySearch.map(
+        {!loading && data.getGallerySearch.map(
           (image: Util.Image) => (
             <GalleryImage
+              key={image.id}
               image={image}
             />
           )

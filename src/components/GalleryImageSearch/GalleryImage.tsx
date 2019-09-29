@@ -3,7 +3,6 @@ import React, { FC, useEffect, useState } from 'react';
 const GalleryImage:FC<PropTypes.IGalleryImageProps> = ({
   image,
 }) => {
-
   return (
     <div className='gallery__search__result'>
       {image.annotations.map((annotation: Util.Annotation) => (

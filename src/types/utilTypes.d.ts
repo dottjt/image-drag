@@ -9,21 +9,23 @@ declare namespace Util {
   }
 
   export type Provider = {
-    provider: string;
-    user_id: string;
     id: string;
+    user_id: string;
+    provider: string;
   }
 
   export type Image = {
+    id: string;
     url: string;
     type: string;
     height: number;
     width: number;
     annotations: Annotation[];
-    annotationCategories: string[];
+    // annotationCategories: string[];
   }
 
   export type Annotation = {
+    id?: string;
     pokemon?: Pokemon;
     human?: Human;
 

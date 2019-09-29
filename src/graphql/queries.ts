@@ -7,7 +7,6 @@ export const GET_CURRENT_USER = gql`{
     display_name
     email
     # avatar
-    # password
     # providers
     # admin
   }
@@ -21,8 +20,6 @@ export const GET_NEW_IMAGE = gql`
       type
       height
       width
-      # annotations
-      # annotationCategories
     }
   }
 `;
@@ -31,13 +28,14 @@ export const GET_GALLERY_SEARCH = gql`
   query GetGallerySearch($searchText: String, $filterQuery: FilterQuery) {
     # doesPokemonExist(searchText: $searchText)
 
-    getGallerySearch(searchText: $searchText) {
+    getGallerySearch(searchText: $searchText, filterQuery: $filterQuery) {
       id
       url
       type
       height
       width
       annotations {
+        name
         pokemon {
           name 
         }
